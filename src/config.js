@@ -1,0 +1,6 @@
+export default {
+  boardSize: [10, 20], // classic tetris board size
+  blockSize: 30,
+  gridColor1: '#5a338a',
+  gridColor2: '#0e0032'
+}
