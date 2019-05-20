@@ -1,17 +1,21 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import config from '../../config';
-import './GameCanvas.scss'
+import {resetBoard} from '../../stores/board';
+import './GameCanvas.scss';
 
 class GameCanvas extends React.Component {
   static propTypes = {
     width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired
+    height: PropTypes.number.isRequired,
+    resetBoard: PropTypes.func.isRequired
   };
 
   componentDidMount() {
     this.drawCanvas();
+    this.props.resetBoard();
   }
 
   componentDidUpdate() {
@@ -19,7 +23,7 @@ class GameCanvas extends React.Component {
   }
 
   drawCanvas() {
-    const { gameCanvas: canvas } = this.refs;
+    const {gameCanvas: canvas} = this.refs;
 
     if (canvas) {
       const context = canvas.getContext('2d');
@@ -46,13 +50,13 @@ class GameCanvas extends React.Component {
   }
 
   clearCanvas(context) {
-    const { width, height } = context.canvas;
+    const {width, height} = context.canvas;
     context.fillStyle = config.gridColor2;
     context.fillRect(0, 0, width, height);
   }
 
   drawBoard(context) {
-    const [ boardWidth, boardHeight ] = config.boardSize;
+    const [boardWidth, boardHeight] = config.boardSize;
     const blockSize = config.blockSize;
 
     for (let i = 0; i < boardWidth; i++) {
@@ -64,4 +68,8 @@ class GameCanvas extends React.Component {
   }
 }
 
-export default GameCanvas;
+const mapDispatchToProps = {resetBoard};
+
+const mapStateToProps = ({board}) => ({board});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameCanvas);
