@@ -1,9 +1,9 @@
-import {createStore, combineReducers} from 'redux';
+import { createStore, combineReducers } from 'redux';
 
-import board from './board/reducer'
+import game from './game/reducer';
 
 export const reducers = combineReducers(
-  {board}
+  { game }
 );
 
 export default createStore(
