@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea293f37-7ac5-46c7-8e7b-cc5e677c9df4" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/helpers/matrixHelper.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/stores/game/gameState.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/stores/game/reducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/blocksFactory.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/components/GameCanvas.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/components/GameCanvas.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/board/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/game/actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/board/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/game/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/board/reducer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -32,14 +23,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="38" column="4" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="4" />
+            <state relative-caret-position="782">
+              <caret line="46" column="33" lean-forward="true" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="blocksFactory.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/blocksFactory.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="8" lean-forward="true" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -136,6 +136,8 @@
         <option value="$PROJECT_DIR$/src/stores/index.js" />
         <option value="$PROJECT_DIR$/src/game/components/GameCanvas.jsx" />
         <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/src/game/components/Piece.jsx" />
+        <option value="$PROJECT_DIR$/src/blocksFactory.js" />
       </list>
     </option>
   </component>
@@ -189,38 +191,6 @@
               <item name="tetris-pwa" type="b2602c69:ProjectViewProjectNode" />
               <item name="tetris-pwa" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tetris-pwa" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tetris-pwa" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="game" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tetris-pwa" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tetris-pwa" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="game" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tetris-pwa" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tetris-pwa" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="helpers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tetris-pwa" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tetris-pwa" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="stores" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="tetris-pwa" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tetris-pwa" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="stores" type="462c0819:PsiDirectoryNode" />
-              <item name="game" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -316,7 +286,7 @@
       <workItem from="1558351087457" duration="83000" />
       <workItem from="1558351186787" duration="428000" />
       <workItem from="1558352193325" duration="10531000" />
-      <workItem from="1558435047770" duration="6017000" />
+      <workItem from="1558435047770" duration="9178000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1558352202972</created>
@@ -339,11 +309,18 @@
       <option name="project" value="LOCAL" />
       <updated>1558363324396</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added main update loop; Created single game store">
+      <created>1558443891057</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1558443891057</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17059000" />
+    <option name="totallyTimeSpent" value="20220000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-12" width="1936" height="1066" extended-state="6" />
@@ -415,7 +392,8 @@
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Added grid render" />
     <MESSAGE value="Added redux" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added redux" />
+    <MESSAGE value="Added main update loop; Created single game store" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added main update loop; Created single game store" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/package.json">
@@ -685,13 +663,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
+    <entry file="file://$PROJECT_DIR$/src/game/components/Piece.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="38" column="4" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="4" />
+        <state relative-caret-position="153">
+          <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="46" column="33" lean-forward="true" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/blocksFactory.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="8" lean-forward="true" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
         </state>
       </provider>
     </entry>
