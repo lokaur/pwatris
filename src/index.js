@@ -6,6 +6,7 @@ import store from './stores'
 import * as game from './stores/game';
 
 import * as gameStates from './stores/game/gameState';
+import blocksLibrary from './blocksFactory';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -52,14 +53,29 @@ function updatePiecePosition(deltaTime) {
 }
 
 function movePiece() {
-  console.log('move');
+}
+
+function getRandomBlock() {
+  return blocksLibrary[random(blocksLibrary.length)];
+}
+
+function random(max, low = 0) {
+  return Math.floor(Math.random() * (max - low) + low);
 }
 
 function initGame() {
-  // TODO: initialize game
+  setNextBlock(getRandomBlock());
+  setCurrentBlock(getNextBlock());
 }
 
+// Setters
+const setNextBlock = block => store.dispatch(game.setNextBlock(block));
+const setCurrentBlock = block => store.dispatch(game.setCurrentBlock(block));
+
 // Getters
-const getGameState = () => game.getGameState(store.getState());
+const getterWrapper = getter => getter(store.getState());
+const getGameState = () => getterWrapper(game.getGameState);
+const getNextBlock = () => getterWrapper(game.getNextBlock);
+const getCurrentBlock = () => getterWrapper(game.getCurrentBlock);
 
 main();

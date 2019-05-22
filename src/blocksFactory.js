@@ -1,13 +1,16 @@
 let i = 0;
 
-const createBlock = (name, color, matrix) => ({
-  name,
-  i,
-  color,
-  matrix: matrix.map(r => r.map(v => v === 0 ? 0 : i++)),
-  x: 0,
-  y: 0
-});
+const createBlock = (name, color, matrix) => {
+  const id = i++;
+  return {
+    name,
+    id,
+    color,
+    matrix: matrix.map(r => r.map(v => v === 0 ? 0 : id)),
+    x: 0,
+    y: 0
+  }
+};
 
 const blocks = [
   createBlock(
