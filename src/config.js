@@ -4,4 +4,5 @@ export default {
   gridColor1: '#5a338a',
   gridColor2: '#0e0032',
   baseFallRate: 1, // in seconds
+  outlineThickness: 0.15,
 }

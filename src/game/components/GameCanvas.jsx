@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import config from '../../config';
 import { resetBoard } from '../../stores/game';
-import blocksLibrary from '../../blocksFactory';
+import blocksLibrary from '../../blocksLibrary';
 import './GameCanvas.scss';
 
 class GameCanvas extends React.Component {
@@ -68,15 +68,63 @@ class GameCanvas extends React.Component {
     matrix.map((col, colIdx) => {
       col.map((val, rowIdx) => {
         if (val !== 0) {
-          this.drawRect(context, rowIdx + offsetX, colIdx + offsetY, this.getColorByBlockId(val));
+          this.drawRect(context, rowIdx + offsetX, colIdx + offsetY, val);
         }
       });
     });
   }
 
-  drawRect(context, row, col, color) {
-    context.fillStyle = color;
-    context.fillRect(row * config.blockSize, col * config.blockSize, config.blockSize, config.blockSize);
+  drawRect(context, row, col, id) {
+    const colors = this.getColorsByBlockId(id);
+    const blockSize = config.blockSize;
+    const x = row * blockSize;
+    const y = col * blockSize;
+    const outlineWidth = blockSize * config.outlineThickness;
+    const doubleOutlineWidth = outlineWidth * 2;
+
+    // Drawing center rectangle
+    context.fillStyle = colors.center;
+    context.fillRect(x + outlineWidth, y + outlineWidth, blockSize - doubleOutlineWidth, blockSize - doubleOutlineWidth);
+
+    // Draw outline top
+    context.fillStyle = colors.top;
+    context.beginPath();
+    context.moveTo(x, y);
+    context.lineTo(x + blockSize, y);
+    context.lineTo(x + blockSize - outlineWidth, y + outlineWidth);
+    context.lineTo(x + outlineWidth, y + outlineWidth);
+    context.lineTo(x, y);
+    context.fill();
+
+    // Draw outline right
+    context.fillStyle = colors.right;
+    context.beginPath();
+    context.moveTo(x + blockSize, y);
+    context.lineTo(x + blockSize, y + blockSize);
+    context.lineTo(x + blockSize - outlineWidth, y + blockSize - outlineWidth);
+    context.lineTo(x + blockSize - outlineWidth, y + outlineWidth);
+    context.lineTo(x + blockSize, y);
+    context.fill();
+
+    // Draw outline bottom
+    context.fillStyle = colors.bottom;
+    context.beginPath();
+    context.moveTo(x, y + blockSize);
+    context.lineTo(x + outlineWidth, y + blockSize - outlineWidth);
+    context.lineTo(x + blockSize - outlineWidth, y + blockSize - outlineWidth);
+    context.lineTo(x + blockSize, y + blockSize);
+    context.lineTo(x, y + blockSize);
+    context.fill();
+
+    // Draw outline left
+    context.fillStyle = colors.left;
+    context.beginPath();
+    context.moveTo(x, y);
+    context.lineTo(x, y + blockSize);
+    context.lineTo(x + outlineWidth, y + blockSize - outlineWidth);
+    context.lineTo(x + outlineWidth, y + outlineWidth);
+    context.lineTo(x, y);
+    context.fill();
   }
 
   drawBoard(context) {
@@ -92,8 +140,8 @@ class GameCanvas extends React.Component {
   }
 
   // TODO: use memorized selector
-  getColorByBlockId(id) {
-    return blocksLibrary.find(block => block.id === id).color;
+  getColorsByBlockId(id) {
+    return blocksLibrary.find(block => block.id === id).colors;
   }
 }
 

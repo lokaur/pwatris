@@ -6,7 +6,7 @@ import store from './stores'
 import * as game from './stores/game';
 
 import * as gameStates from './stores/game/gameState';
-import blocksLibrary from './blocksFactory';
+import blocksLibrary from './blocksLibrary';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
