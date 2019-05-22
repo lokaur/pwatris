@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import config from '../../config';
 import { resetBoard } from '../../stores/game';
-import blocksLibrary from '../../blocksLibrary';
+import { drawGame } from '../../helpers/renderHelper'
 import './GameCanvas.scss';
 
 class GameCanvas extends React.Component {
@@ -32,7 +31,7 @@ class GameCanvas extends React.Component {
       const context = canvas.getContext('2d');
       if (!this.frameAnimationRequest) {
         this.frameAnimationRequest = window.requestAnimationFrame(() => {
-          this.draw(context, currentBlock);
+          drawGame(context, currentBlock);
           this.frameAnimationRequest = undefined;
         });
       }
@@ -45,103 +44,6 @@ class GameCanvas extends React.Component {
       <canvas ref='gameCanvas' id='game' width={ width } height={ height }>
       </canvas>
     )
-  }
-
-  draw(context, currentBlock) {
-    this.clearCanvas(context);
-    this.drawBoard(context);
-    this.drawBlock(context, currentBlock);
-  }
-
-  clearCanvas(context) {
-    const { width, height } = context.canvas;
-    context.fillStyle = config.gridColor2;
-    context.fillRect(0, 0, width, height);
-  }
-
-  drawBlock(context, currentBlock) {
-    console.log(`Drawing block ${currentBlock.name}`);
-    this.drawMatrix(context, currentBlock.matrix, currentBlock.x, currentBlock.y);
-  }
-
-  drawMatrix(context, matrix, offsetX = 0, offsetY = 0) {
-    matrix.map((col, colIdx) => {
-      col.map((val, rowIdx) => {
-        if (val !== 0) {
-          this.drawRect(context, rowIdx + offsetX, colIdx + offsetY, val);
-        }
-      });
-    });
-  }
-
-  drawRect(context, row, col, id) {
-    const colors = this.getColorsByBlockId(id);
-    const blockSize = config.blockSize;
-    const x = row * blockSize;
-    const y = col * blockSize;
-    const outlineWidth = blockSize * config.outlineThickness;
-    const doubleOutlineWidth = outlineWidth * 2;
-
-    // Drawing center rectangle
-    context.fillStyle = colors.center;
-    context.fillRect(x + outlineWidth, y + outlineWidth, blockSize - doubleOutlineWidth, blockSize - doubleOutlineWidth);
-
-    // Draw outline top
-    context.fillStyle = colors.top;
-    context.beginPath();
-    context.moveTo(x, y);
-    context.lineTo(x + blockSize, y);
-    context.lineTo(x + blockSize - outlineWidth, y + outlineWidth);
-    context.lineTo(x + outlineWidth, y + outlineWidth);
-    context.lineTo(x, y);
-    context.fill();
-
-    // Draw outline right
-    context.fillStyle = colors.right;
-    context.beginPath();
-    context.moveTo(x + blockSize, y);
-    context.lineTo(x + blockSize, y + blockSize);
-    context.lineTo(x + blockSize - outlineWidth, y + blockSize - outlineWidth);
-    context.lineTo(x + blockSize - outlineWidth, y + outlineWidth);
-    context.lineTo(x + blockSize, y);
-    context.fill();
-
-    // Draw outline bottom
-    context.fillStyle = colors.bottom;
-    context.beginPath();
-    context.moveTo(x, y + blockSize);
-    context.lineTo(x + outlineWidth, y + blockSize - outlineWidth);
-    context.lineTo(x + blockSize - outlineWidth, y + blockSize - outlineWidth);
-    context.lineTo(x + blockSize, y + blockSize);
-    context.lineTo(x, y + blockSize);
-    context.fill();
-
-    // Draw outline left
-    context.fillStyle = colors.left;
-    context.beginPath();
-    context.moveTo(x, y);
-    context.lineTo(x, y + blockSize);
-    context.lineTo(x + outlineWidth, y + blockSize - outlineWidth);
-    context.lineTo(x + outlineWidth, y + outlineWidth);
-    context.lineTo(x, y);
-    context.fill();
-  }
-
-  drawBoard(context) {
-    const [ boardWidth, boardHeight ] = config.boardSize;
-    const blockSize = config.blockSize;
-
-    for (let i = 0; i < boardWidth; i++) {
-      for (let j = 0; j < boardHeight; j++) {
-        context.fillStyle = (i + j) % 2 === 0 ? config.gridColor1 : config.gridColor2;
-        context.fillRect(i * blockSize, j * blockSize, blockSize, blockSize);
-      }
-    }
-  }
-
-  // TODO: use memorized selector
-  getColorsByBlockId(id) {
-    return blocksLibrary.find(block => block.id === id).colors;
   }
 }
 

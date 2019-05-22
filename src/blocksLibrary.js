@@ -1,7 +1,7 @@
 let i = 0;
 
 const createBlock = (name, colors, matrix) => {
-  const id = i++;
+  const id = ++i;
   return {
     name,
     id,
@@ -23,6 +23,7 @@ const blocks = [
       right: '#00a7a7',
     },
     [
+      [ 1 ],
       [ 1 ],
       [ 1 ],
       [ 1 ],
