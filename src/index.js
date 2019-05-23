@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { cloneDeep } from 'lodash';
 
 import store from './stores'
 import * as game from './stores/game';
@@ -56,7 +57,7 @@ function movePiece() {
 }
 
 function getRandomBlock() {
-  return blocksLibrary[random(blocksLibrary.length)];
+  return blocksLibrary[ random(blocksLibrary.length) ];
 }
 
 function random(max, low = 0) {
@@ -65,7 +66,13 @@ function random(max, low = 0) {
 
 function initGame() {
   setNextBlock(getRandomBlock());
-  setCurrentBlock(getNextBlock());
+  setCurrentBlock(getCenterizedBlock(getNextBlock()));
+}
+
+function getCenterizedBlock(block) {
+  const blockClone = cloneDeep(block);
+  blockClone.x = Math.floor((config.boardSize[ 0 ] - blockClone.matrix[ 0 ].length) / 2);
+  return blockClone;
 }
 
 // Setters
