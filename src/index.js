@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { cloneDeep } from 'lodash';
+import pressed from 'pressed';
 
 import store from './stores'
 import * as game from './stores/game';
@@ -18,6 +19,7 @@ let lastFrameTime = 0;
 let lastPieceFallTime = 0;
 
 function main() {
+  pressed.start(window);
   initGame();
 
   ReactDOM.render(<Provider store={ store }><App/></Provider>, document.getElementById('root'));
@@ -41,8 +43,14 @@ function update(currentTime) {
   /*if (getGameState() !== gameStates.GAME_STATE_PLAYING) {
     return;
   }*/
-
+  handleUserInput(currentTime);
   updatePiecePosition(deltaTime);
+}
+
+function handleUserInput(currentTime) {
+  if (pressed.some(...config.controls.down)) {
+    console.log('Down');
+  }
 }
 
 function updatePiecePosition(deltaTime) {
