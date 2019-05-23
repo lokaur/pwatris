@@ -49,14 +49,12 @@ function updatePiecePosition(deltaTime) {
   lastPieceFallTime += deltaTime;
   if (lastPieceFallTime > Math.ceil(1000 / config.baseFallRate)) {
     lastPieceFallTime = 0;
-    movePiece();
+    moveBlockDown();
   }
 }
 
-function movePiece() {
-}
-
 function getRandomBlock() {
+  // TODO: add random rotation
   return blocksLibrary[ random(blocksLibrary.length) ];
 }
 
@@ -84,5 +82,8 @@ const getterWrapper = getter => getter(store.getState());
 const getGameState = () => getterWrapper(game.getGameState);
 const getNextBlock = () => getterWrapper(game.getNextBlock);
 const getCurrentBlock = () => getterWrapper(game.getCurrentBlock);
+
+// Methods
+const moveBlockDown = () => store.dispatch(game.moveBlockDown());
 
 main();

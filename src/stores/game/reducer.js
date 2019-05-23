@@ -1,3 +1,5 @@
+import { cloneDeep } from 'lodash';
+
 import * as types from './actions';
 import * as gameStates from './gameState';
 import config from '../../config';
@@ -18,6 +20,10 @@ export default function (curState = initialState, action) {
       return { ...curState, nextBlock: action.block };
     case types.SET_CURRENT_BLOCK:
       return { ...curState, currentBlock: action.block };
+    case types.MOVE_BLOCK_DOWN:
+      const blockClone = cloneDeep(curState.currentBlock);
+      blockClone.y += 1;
+      return { ...curState, currentBlock: blockClone };
     default:
       return curState;
   }
