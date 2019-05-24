@@ -15,8 +15,17 @@ import * as serviceWorker from './serviceWorker';
 import './index.css';
 import config from './config';
 
+let holdKeyMovementThreshold = 0;
+let startKeyRepeatThreshold = 0;
+let downKeyMovementThreshold = 0;
+
 let lastFrameTime = 0;
 let lastPieceFallTime = 0;
+let lastDownMove = 0;
+let lastLeftMove = 0;
+let lastRightMove = 0;
+let lastRotateMove = 0;
+let lastStart = 0;
 
 function main() {
   pressed.start(window);
@@ -39,17 +48,81 @@ function onAnimationFrame(currentTime) {
 function update(currentTime) {
   const deltaTime = currentTime - lastFrameTime;
   lastFrameTime = currentTime;
+  handleStartInput(currentTime);
 
-  /*if (getGameState() !== gameStates.GAME_STATE_PLAYING) {
+  if (getGameState() !== gameStates.GAME_STATE_PLAYING) {
     return;
-  }*/
-  handleUserInput(currentTime);
+  }
+
+  handleInGameInput(currentTime);
   updatePiecePosition(deltaTime);
 }
 
-function handleUserInput(currentTime) {
+function handleStartInput(currentTime) {
+  if (pressed.some(...config.controls.start)) {
+    if (currentTime - lastStart > startKeyRepeatThreshold) {
+      lastStart = currentTime;
+
+      if (getGameState() === gameStates.GAME_STATE_PAUSE) {
+        startGame();
+      } else {
+        pauseGame();
+      }
+    }
+  } else {
+    lastStart = 0;
+  }
+}
+
+function handleInGameInput(currentTime) {
+  handleInputDown(currentTime);
+  handleInputLeft(currentTime);
+  handleInputRight(currentTime);
+  handleInputRotate(currentTime);
+}
+
+function handleInputLeft(currentTime) {
+  if (pressed.some(...config.controls.left)) {
+    if (currentTime - lastLeftMove > holdKeyMovementThreshold) {
+      moveBlockLeft();
+      lastLeftMove = currentTime;
+    }
+  } else {
+    lastLeftMove = 0;
+  }
+}
+
+function handleInputRotate(currentTime) {
+  if (pressed.some(...config.controls.rotate)) {
+    if (currentTime - lastRotateMove > holdKeyMovementThreshold) {
+      rotateBlock();
+      lastRotateMove = currentTime;
+    }
+  } else {
+    lastRotateMove = 0;
+  }
+}
+
+function handleInputRight(currentTime) {
+  if (pressed.some(...config.controls.right)) {
+    if (currentTime - lastRightMove > holdKeyMovementThreshold) {
+      moveBlockRight();
+      lastRightMove = currentTime;
+    }
+  } else {
+    lastRightMove = 0;
+  }
+}
+
+function handleInputDown(currentTime) {
   if (pressed.some(...config.controls.down)) {
-    console.log('Down');
+    if (currentTime - lastDownMove > downKeyMovementThreshold) {
+      lastDownMove = currentTime;
+      lastPieceFallTime = 0;
+      moveBlockDown();
+    }
+  } else {
+    lastDownMove = 0;
   }
 }
 
@@ -71,6 +144,10 @@ function random(max, low = 0) {
 }
 
 function initGame() {
+  holdKeyMovementThreshold = Math.ceil(1000 / config.holdKeyRepeatSpeed);
+  startKeyRepeatThreshold = Math.ceil(1000 / config.startRepeatSpeed);
+  downKeyMovementThreshold = Math.ceil(1000 / config.downMovementSpeed);
+
   setNextBlock(getRandomBlock());
   setCurrentBlock(getCenterizedBlock(getNextBlock()));
 }
@@ -89,9 +166,13 @@ const setCurrentBlock = block => store.dispatch(game.setCurrentBlock(block));
 const getterWrapper = getter => getter(store.getState());
 const getGameState = () => getterWrapper(game.getGameState);
 const getNextBlock = () => getterWrapper(game.getNextBlock);
-const getCurrentBlock = () => getterWrapper(game.getCurrentBlock);
 
 // Methods
 const moveBlockDown = () => store.dispatch(game.moveBlockDown());
+const moveBlockLeft = () => store.dispatch(game.moveBlockLeft());
+const moveBlockRight = () => store.dispatch(game.moveBlockRight());
+const rotateBlock = () => store.dispatch(game.rotateBlock());
+const startGame = () => store.dispatch(game.setGameState(gameStates.GAME_STATE_PLAYING));
+const pauseGame = () => store.dispatch(game.setGameState(gameStates.GAME_STATE_PAUSE));
 
 main();
