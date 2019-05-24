@@ -14,8 +14,6 @@ function clearCanvas(context) {
 }
 
 function drawBlock(context, currentBlock) {
-  console.log(`Drawing block ${currentBlock.name}`);
-  console.log(currentBlock);
   drawMatrix(context, currentBlock.matrix, currentBlock.x, currentBlock.y);
 }
 

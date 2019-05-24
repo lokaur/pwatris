@@ -5,4 +5,16 @@ export default {
   gridColor2: '#0e0032',
   baseFallRate: 1, // in seconds
   outlineThickness: 0.14,
+
+  // input config
+  downMovementSpeed: 40,
+  holdKeyRepeatSpeed: 8,
+  startRepeatSpeed: 2,
+  controls: {
+    rotate: ['up', 'w', 'space'],
+    left: ['left', 'a'],
+    down: ['down', 's'],
+    right: ['right', 'd'],
+    start: ['enter'],
+  }
 }
