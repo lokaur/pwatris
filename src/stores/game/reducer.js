@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash';
 import * as types from './actions';
 import * as gameStates from './gameState';
 import config from '../../config';
-import { createEmptyMatrix, hasCollision, mergeMatrices, rotate } from '../../helpers/matrixHelper';
+import { getMatrixWidth, createEmptyMatrix, hasCollision, mergeMatrices, rotate } from '../../helpers/matrixHelper';
 
 const initialState = {
   board: createEmptyMatrix(...config.boardSize),
@@ -54,6 +54,10 @@ export default function (curState = initialState, action) {
     case types.ROTATE_BLOCK: {
       const blockClone = cloneDeep(curState.currentBlock);
       blockClone.matrix = rotate(blockClone.matrix);
+      if (!validateRotation(blockClone, curState.board)) {
+        return curState;
+      }
+
       return { ...curState, currentBlock: blockClone };
     }
     case types.MERGE_BLOCK_TO_BOARD: {
@@ -64,4 +68,20 @@ export default function (curState = initialState, action) {
       return curState;
     }
   }
+}
+
+function validateRotation(rotatedBlock, board) {
+  const blockWidth = getMatrixWidth(rotatedBlock.matrix);
+  let offsetX = 1;
+
+  while (hasCollision(board, rotatedBlock.matrix, rotatedBlock.x, rotatedBlock.y)) {
+    rotatedBlock.x += offsetX;
+    offsetX = offsetX > 0 ? -offsetX : -offsetX + 1;
+
+    if (Math.abs(offsetX) > Math.ceil(blockWidth / 2)) {
+      return false;
+    }
+  }
+
+  return true;
 }

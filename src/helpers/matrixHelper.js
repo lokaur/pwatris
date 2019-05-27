@@ -1,8 +1,8 @@
 import { constant, times, inRange } from 'lodash';
 
 const createEmptyArray = length => times(length, constant(0));
-const getMatrixHeight = matrix => matrix.length;
-const getMatrixWidth = matrix => matrix[ 0 ].length;
+export const getMatrixHeight = matrix => matrix.length;
+export const getMatrixWidth = matrix => matrix[ 0 ].length;
 
 export function createEmptyMatrix(width, height) {
   let matrix = createEmptyArray(height);
