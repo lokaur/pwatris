@@ -1,9 +1,10 @@
 import blocksLibrary from '../blocksLibrary';
 import config from '../config';
 
-export function drawGame(context, currentBlock) {
+export function drawGame(context, board, currentBlock) {
   clearCanvas(context);
-  drawBoard(context);
+  drawBoardSubstrate(context);
+  drawBoard(context, board);
   drawBlock(context, currentBlock);
 }
 
@@ -11,6 +12,10 @@ function clearCanvas(context) {
   const { width, height } = context.canvas;
   context.fillStyle = config.gridColor2;
   context.fillRect(0, 0, width, height);
+}
+
+function drawBoard(context, board) {
+  drawMatrix(context, board);
 }
 
 function drawBlock(context, currentBlock) {
@@ -89,7 +94,7 @@ function drawOutlineLeft(context, color, x, y, blockSize, outlineWidth) {
   context.fill();
 }
 
-function drawBoard(context) {
+function drawBoardSubstrate(context) {
   const [ boardWidth, boardHeight ] = config.boardSize;
   const blockSize = config.blockSize;
 

@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash';
 import * as types from './actions';
 import * as gameStates from './gameState';
 import config from '../../config';
-import { createEmptyMatrix } from '../../helpers/matrixHelper';
+import { createEmptyMatrix, hasCollision, mergeMatrices } from '../../helpers/matrixHelper';
 
 const initialState = {
   board: createEmptyMatrix(...config.boardSize),
@@ -30,11 +30,23 @@ export default function (curState = initialState, action) {
       return { ...curState, currentBlock: blockClone };
     }
     case types.MOVE_BLOCK_LEFT: {
+      const currentBlock = curState.currentBlock;
+
+      if (hasCollision(curState.board, currentBlock.matrix, currentBlock.x - 1, currentBlock.y)) {
+        return curState;
+      }
+
       const blockClone = cloneDeep(curState.currentBlock);
       blockClone.x -= 1;
       return { ...curState, currentBlock: blockClone };
     }
     case types.MOVE_BLOCK_RIGHT: {
+      const currentBlock = curState.currentBlock;
+
+      if (hasCollision(curState.board, currentBlock.matrix, currentBlock.x + 1, currentBlock.y)) {
+        return curState;
+      }
+
       const blockClone = cloneDeep(curState.currentBlock);
       blockClone.x += 1;
       return { ...curState, currentBlock: blockClone };
@@ -43,6 +55,10 @@ export default function (curState = initialState, action) {
       const blockClone = cloneDeep(curState.currentBlock);
       console.log('rotate');
       return { ...curState, currentBlock: blockClone };
+    }
+    case types.MERGE_BLOCK_TO_BOARD: {
+      const { matrix, x, y } = action.block;
+      return { ...curState, board: mergeMatrices(curState.board, matrix, x, y) }
     }
     default: {
       return curState;

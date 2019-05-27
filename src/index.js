@@ -14,6 +14,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 import config from './config';
+import { hasCollision } from './helpers/matrixHelper';
 
 let holdKeyMovementThreshold = 0;
 let startKeyRepeatThreshold = 0;
@@ -55,7 +56,24 @@ function update(currentTime) {
   }
 
   handleInGameInput(currentTime);
-  updatePiecePosition(deltaTime);
+  updateBlockPosition(deltaTime);
+  checkBoard();
+}
+
+function checkBoard() {
+  const { matrix, x, y } = getCurrentBlock();
+  if (hasCollision(getBoard(), matrix, x, y)) {
+    placeCurrentBlockToBoard();
+    // TODO: remove complete lines
+    setCurrentBlock(getCenterizedBlock(getNextBlock()));
+    setNextBlock(getRandomBlock());
+  }
+}
+
+function placeCurrentBlockToBoard() {
+  const blockClone = cloneDeep(getCurrentBlock());
+  blockClone.y -= 1;
+  mergeBlockToBoard(blockClone);
 }
 
 function handleStartInput(currentTime) {
@@ -126,7 +144,7 @@ function handleInputDown(currentTime) {
   }
 }
 
-function updatePiecePosition(deltaTime) {
+function updateBlockPosition(deltaTime) {
   lastPieceFallTime += deltaTime;
   if (lastPieceFallTime > Math.ceil(1000 / config.baseFallRate)) {
     lastPieceFallTime = 0;
@@ -150,6 +168,7 @@ function initGame() {
 
   setNextBlock(getRandomBlock());
   setCurrentBlock(getCenterizedBlock(getNextBlock()));
+  setNextBlock(getRandomBlock());
 }
 
 function getCenterizedBlock(block) {
@@ -166,6 +185,8 @@ const setCurrentBlock = block => store.dispatch(game.setCurrentBlock(block));
 const getterWrapper = getter => getter(store.getState());
 const getGameState = () => getterWrapper(game.getGameState);
 const getNextBlock = () => getterWrapper(game.getNextBlock);
+const getCurrentBlock = () => getterWrapper(game.getCurrentBlock);
+const getBoard = () => getterWrapper(game.getBoard);
 
 // Methods
 const moveBlockDown = () => store.dispatch(game.moveBlockDown());
@@ -174,5 +195,6 @@ const moveBlockRight = () => store.dispatch(game.moveBlockRight());
 const rotateBlock = () => store.dispatch(game.rotateBlock());
 const startGame = () => store.dispatch(game.setGameState(gameStates.GAME_STATE_PLAYING));
 const pauseGame = () => store.dispatch(game.setGameState(gameStates.GAME_STATE_PAUSE));
+const mergeBlockToBoard = (block) => store.dispatch(game.mergeBlockToBoard(block));
 
 main();

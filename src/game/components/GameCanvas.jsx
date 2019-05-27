@@ -25,13 +25,13 @@ class GameCanvas extends React.Component {
 
   drawCanvas() {
     const { gameCanvas: canvas } = this.refs;
-    const { currentBlock } = this.props;
 
     if (canvas) {
       const context = canvas.getContext('2d');
       if (!this.frameAnimationRequest) {
         this.frameAnimationRequest = window.requestAnimationFrame(() => {
-          drawGame(context, currentBlock);
+          const { board, currentBlock } = this.props;
+          drawGame(context, board, currentBlock);
           this.frameAnimationRequest = undefined;
         });
       }
@@ -41,8 +41,7 @@ class GameCanvas extends React.Component {
   render() {
     const { width, height } = this.props;
     return (
-      <canvas ref='gameCanvas' id='game' width={ width } height={ height }>
-      </canvas>
+      <canvas ref='gameCanvas' id='game' width={ width } height={ height }/>
     )
   }
 }
