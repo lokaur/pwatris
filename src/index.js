@@ -25,11 +25,29 @@ let lastPieceFallTime = 0;
 let lastDownMove = 0;
 let lastLeftMove = 0;
 let lastRightMove = 0;
-let lastRotateMove = 0;
 let lastStart = 0;
 
+let pressedKeys = {};
+
+const onKeyDown = ({ code }) => {
+  pressedKeys[ code.toLowerCase() ] = true;
+};
+
+const onKeyUp = ({ code }) => {
+  delete pressedKeys[ code.toLowerCase() ];
+};
+
+const onBlur = () => {
+  pressedKeys = {};
+};
+
+const isSomeKeyPressed = (...keys) => keys.reduce((defined, key) => defined || pressedKeys[ key ] !== undefined, false);
+
 function main() {
-  pressed.start(window);
+  window.addEventListener('keydown', onKeyDown);
+  window.addEventListener('keyup', onKeyUp);
+  window.addEventListener('blur', onBlur);
+
   initGame();
 
   ReactDOM.render(<Provider store={ store }><App/></Provider>, document.getElementById('root'));
@@ -77,7 +95,7 @@ function placeCurrentBlockToBoard() {
 }
 
 function handleStartInput(currentTime) {
-  if (pressed.some(...config.controls.start)) {
+  if (isSomeKeyPressed(...config.controls.start)) {
     if (currentTime - lastStart > startKeyRepeatThreshold) {
       lastStart = currentTime;
 
@@ -100,7 +118,7 @@ function handleInGameInput(currentTime) {
 }
 
 function handleInputLeft(currentTime) {
-  if (pressed.some(...config.controls.left)) {
+  if (isSomeKeyPressed(...config.controls.left)) {
     if (currentTime - lastLeftMove > holdKeyMovementThreshold) {
       moveBlockLeft();
       lastLeftMove = currentTime;
@@ -111,18 +129,14 @@ function handleInputLeft(currentTime) {
 }
 
 function handleInputRotate(currentTime) {
-  if (pressed.some(...config.controls.rotate)) {
-    if (currentTime - lastRotateMove > holdKeyMovementThreshold) {
-      rotateBlock();
-      lastRotateMove = currentTime;
-    }
-  } else {
-    lastRotateMove = 0;
+  if (isSomeKeyPressed(...config.controls.rotate)) {
+    pressed.remove(...config.controls.rotate);
+    rotateBlock();
   }
 }
 
 function handleInputRight(currentTime) {
-  if (pressed.some(...config.controls.right)) {
+  if (isSomeKeyPressed(...config.controls.right)) {
     if (currentTime - lastRightMove > holdKeyMovementThreshold) {
       moveBlockRight();
       lastRightMove = currentTime;
@@ -133,7 +147,7 @@ function handleInputRight(currentTime) {
 }
 
 function handleInputDown(currentTime) {
-  if (pressed.some(...config.controls.down)) {
+  if (isSomeKeyPressed(...config.controls.down)) {
     if (currentTime - lastDownMove > downKeyMovementThreshold) {
       lastDownMove = currentTime;
       lastPieceFallTime = 0;

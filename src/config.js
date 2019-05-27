@@ -11,10 +11,10 @@ export default {
   holdKeyRepeatSpeed: 8,
   startRepeatSpeed: 2,
   controls: {
-    rotate: ['up', 'w', 'space'],
-    left: ['left', 'a'],
-    down: ['down', 's'],
-    right: ['right', 'd'],
+    rotate: ['arrowup', 'keyw', 'space'],
+    left: ['arrowleft', 'keya'],
+    down: ['arrowdown', 'keys'],
+    right: ['arrowright', 'keyd'],
     start: ['enter'],
   }
 }
