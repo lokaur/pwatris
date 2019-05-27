@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { cloneDeep } from 'lodash';
-import pressed from 'pressed';
 
 import store from './stores'
 import * as game from './stores/game';
@@ -26,6 +25,7 @@ let lastDownMove = 0;
 let lastLeftMove = 0;
 let lastRightMove = 0;
 let lastStart = 0;
+let isRotating = false;
 
 let pressedKeys = {};
 
@@ -114,7 +114,7 @@ function handleInGameInput(currentTime) {
   handleInputDown(currentTime);
   handleInputLeft(currentTime);
   handleInputRight(currentTime);
-  handleInputRotate(currentTime);
+  handleInputRotate();
 }
 
 function handleInputLeft(currentTime) {
@@ -128,10 +128,14 @@ function handleInputLeft(currentTime) {
   }
 }
 
-function handleInputRotate(currentTime) {
+function handleInputRotate() {
   if (isSomeKeyPressed(...config.controls.rotate)) {
-    pressed.remove(...config.controls.rotate);
-    rotateBlock();
+    if (!isRotating) {
+      isRotating = true;
+      rotateBlock();
+    }
+  } else {
+    isRotating = false;
   }
 }
 
