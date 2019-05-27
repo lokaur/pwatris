@@ -51,3 +51,20 @@ export function mergeMatrices(board, block, offsetX, offsetY) {
     return val;
   }));
 }
+
+// Rotates matrix clockwise
+export function rotate(sourceMatrix) {
+  const height = getMatrixHeight(sourceMatrix);
+  const width = getMatrixWidth(sourceMatrix);
+
+  // noinspection JSSuspiciousNameCombination
+  const flippedMatrix = createEmptyMatrix(height, width);
+
+  times(height, (row) => {
+    times(width, (column) => {
+      flippedMatrix[column][row] = sourceMatrix[row][column]
+    })
+  });
+
+  return flippedMatrix.map(row => row.reverse());
+}
