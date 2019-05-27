@@ -53,7 +53,21 @@ export function mergeMatrices(board, block, offsetX, offsetY) {
 }
 
 // Rotates matrix clockwise
-export function rotate(sourceMatrix) {
+export function rotate(sourceMatrix, count = 1) {
+  if (count === 0) {
+    return sourceMatrix;
+  }
+
+  let rotatedMatrix = null;
+
+  for (let i = 0; i < count; i++) {
+    rotatedMatrix = rotateMatrixClockwise(sourceMatrix);
+  }
+
+  return rotatedMatrix;
+}
+
+function rotateMatrixClockwise(sourceMatrix) {
   const height = getMatrixHeight(sourceMatrix);
   const width = getMatrixWidth(sourceMatrix);
 
@@ -62,7 +76,7 @@ export function rotate(sourceMatrix) {
 
   times(height, (row) => {
     times(width, (column) => {
-      flippedMatrix[column][row] = sourceMatrix[row][column]
+      flippedMatrix[ column ][ row ] = sourceMatrix[ row ][ column ]
     })
   });
 

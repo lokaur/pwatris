@@ -13,7 +13,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 import config from './config';
-import { hasCollision } from './helpers/matrixHelper';
+import { hasCollision, rotate } from './helpers/matrixHelper';
 
 let holdKeyMovementThreshold = 0;
 let startKeyRepeatThreshold = 0;
@@ -197,8 +197,10 @@ function updateBlockPosition(deltaTime) {
 }
 
 function getRandomBlock() {
-  // TODO: add random rotation
-  return blocksLibrary[ random(blocksLibrary.length) ];
+  const block = blocksLibrary[ random(blocksLibrary.length) ];
+  const rotationCount = random(4);
+  block.matrix = rotate(block.matrix, rotationCount);
+  return block;
 }
 
 function random(max, low = 0) {
