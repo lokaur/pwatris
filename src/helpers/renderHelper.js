@@ -1,5 +1,6 @@
 import blocksLibrary from '../blocksLibrary';
 import config from '../config';
+import { getMatrixHeight, getMatrixWidth } from './matrixHelper';
 
 export function drawGame(context, board, currentBlock) {
   clearCanvas(context);
@@ -23,13 +24,17 @@ function drawBlock(context, currentBlock) {
 }
 
 function drawMatrix(context, matrix, offsetX = 0, offsetY = 0) {
-  matrix.map((col, colIdx) => {
-    col.map((val, rowIdx) => {
+  let matrixHeight = getMatrixHeight(matrix);
+  let matrixWidth = getMatrixWidth(matrix);
+
+  for (let i = 0; i < matrixHeight; i++) {
+    for (let j = 0; j < matrixWidth; j++) {
+      const val = matrix[ i ][ j ];
       if (val !== 0) {
-        drawRect(context, rowIdx + offsetX, colIdx + offsetY, val);
+        drawRect(context, j + offsetX, i + offsetY, val);
       }
-    });
-  });
+    }
+  }
 }
 
 function drawRect(context, row, col, id) {
