@@ -18,6 +18,7 @@ import { hasCollision } from './helpers/matrixHelper';
 let holdKeyMovementThreshold = 0;
 let startKeyRepeatThreshold = 0;
 let downKeyMovementThreshold = 0;
+let beforeRepeatDelay = 0;
 
 let lastFrameTime = 0;
 let lastPieceFallTime = 0;
@@ -25,7 +26,10 @@ let lastDownMove = 0;
 let lastLeftMove = 0;
 let lastRightMove = 0;
 let lastStart = 0;
+
 let isRotating = false;
+let isMovingRight = false;
+let isMovingLeft = false;
 
 let pressedKeys = {};
 
@@ -119,12 +123,45 @@ function handleInGameInput(currentTime) {
 
 function handleInputLeft(currentTime) {
   if (isSomeKeyPressed(...config.controls.left)) {
-    if (currentTime - lastLeftMove > holdKeyMovementThreshold) {
+    const moveLeft = () => {
       moveBlockLeft();
       lastLeftMove = currentTime;
+    };
+
+    const deltaTime = currentTime - lastLeftMove;
+    if (deltaTime > holdKeyMovementThreshold) {
+      if (lastLeftMove === 0) { // No delay on first press
+        moveLeft();
+      } else if (isMovingLeft || deltaTime > beforeRepeatDelay) { // Delay after first move
+        isMovingLeft = true;
+        moveLeft();
+      }
     }
   } else {
+    isMovingLeft = false;
     lastLeftMove = 0;
+  }
+}
+
+function handleInputRight(currentTime) {
+  if (isSomeKeyPressed(...config.controls.right)) {
+    const moveRight = () => {
+      moveBlockRight();
+      lastRightMove = currentTime;
+    };
+
+    const deltaTime = currentTime - lastRightMove;
+    if (deltaTime > holdKeyMovementThreshold) {
+      if (lastRightMove === 0) { // No delay on first press
+        moveRight();
+      } else if (isMovingRight || deltaTime > beforeRepeatDelay) { // Delay after first move
+        isMovingRight = true;
+        moveRight();
+      }
+    }
+  } else {
+    isMovingRight = false;
+    lastRightMove = 0;
   }
 }
 
@@ -136,17 +173,6 @@ function handleInputRotate() {
     }
   } else {
     isRotating = false;
-  }
-}
-
-function handleInputRight(currentTime) {
-  if (isSomeKeyPressed(...config.controls.right)) {
-    if (currentTime - lastRightMove > holdKeyMovementThreshold) {
-      moveBlockRight();
-      lastRightMove = currentTime;
-    }
-  } else {
-    lastRightMove = 0;
   }
 }
 
@@ -183,6 +209,7 @@ function initGame() {
   holdKeyMovementThreshold = Math.ceil(1000 / config.holdKeyRepeatSpeed);
   startKeyRepeatThreshold = Math.ceil(1000 / config.startRepeatSpeed);
   downKeyMovementThreshold = Math.ceil(1000 / config.downMovementSpeed);
+  beforeRepeatDelay = Math.ceil(config.beforeRepeatDelay * 1000);
 
   setNextBlock(getRandomBlock());
   setCurrentBlock(getCenterizedBlock(getNextBlock()));
