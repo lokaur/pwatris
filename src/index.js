@@ -135,6 +135,8 @@ function handleStartInput(currentTime) {
           initGame();
           startGame();
           break;
+        default:
+          break;
       }
     }
   } else {
