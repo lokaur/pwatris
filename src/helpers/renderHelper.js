@@ -6,24 +6,24 @@ export function drawGame(context, board, currentBlock) {
   clearCanvas(context);
   drawBoardSubstrate(context);
   drawBoard(context, board);
-  drawBlock(context, currentBlock);
+  drawBlock(context, currentBlock, config.blockSize);
 }
 
-function clearCanvas(context) {
+export function clearCanvas(context) {
   const { width, height } = context.canvas;
   context.fillStyle = config.gridColor2;
   context.fillRect(0, 0, width, height);
 }
 
 function drawBoard(context, board) {
-  drawMatrix(context, board);
+  drawMatrix(context, board, config.blockSize);
 }
 
-function drawBlock(context, currentBlock) {
-  drawMatrix(context, currentBlock.matrix, currentBlock.x, currentBlock.y);
+function drawBlock(context, currentBlock, blockSize) {
+  drawMatrix(context, currentBlock.matrix, blockSize, currentBlock.x, currentBlock.y);
 }
 
-function drawMatrix(context, matrix, offsetX = 0, offsetY = 0) {
+export function drawMatrix(context, matrix, blockSize, offsetX = 0, offsetY = 0) {
   let matrixHeight = getMatrixHeight(matrix);
   let matrixWidth = getMatrixWidth(matrix);
 
@@ -31,15 +31,14 @@ function drawMatrix(context, matrix, offsetX = 0, offsetY = 0) {
     for (let j = 0; j < matrixWidth; j++) {
       const val = matrix[ i ][ j ];
       if (val !== 0) {
-        drawRect(context, j + offsetX, i + offsetY, val);
+        drawRect(context, j + offsetX, i + offsetY, val, blockSize);
       }
     }
   }
 }
 
-function drawRect(context, row, col, id) {
+function drawRect(context, row, col, id, blockSize) {
   const colors = getColorsByBlockId(id);
-  const blockSize = config.blockSize;
   const x = row * blockSize;
   const y = col * blockSize;
   const outlineWidth = blockSize * config.outlineThickness;

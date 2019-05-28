@@ -3,6 +3,24 @@ html {
   overflow-y: hidden;
 }
 
+body {
+  margin: 0;
+}
+
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.right_container {
+  order: 2;
+  min-width: 50px;
+}
+
+.left_container {
+  order: 0;
+  min-width: 50px;
 }
