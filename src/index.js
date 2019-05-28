@@ -13,7 +13,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 import config from './config';
-import { hasCollision, rotate } from './helpers/matrixHelper';
+import { getFullRowIndexes, hasCollision, rotate } from './helpers/matrixHelper';
 
 let holdKeyMovementThreshold = 0;
 let startKeyRepeatThreshold = 0;
@@ -86,9 +86,16 @@ function checkBoard() {
   const { matrix, x, y } = getCurrentBlock();
   if (hasCollision(getBoard(), matrix, x, y)) {
     placeCurrentBlockToBoard();
-    // TODO: remove complete lines
+    collapseCompletedLines();
     setCurrentBlock(getCenterizedBlock(getNextBlock()));
     setNextBlock(getRandomBlock());
+  }
+}
+
+function collapseCompletedLines() {
+  const linesToRemove = getFullRowIndexes(getBoard());
+  if (linesToRemove.length > 0) {
+    removeLines(linesToRemove);
   }
 }
 
@@ -243,5 +250,6 @@ const rotateBlock = () => store.dispatch(game.rotateBlock());
 const startGame = () => store.dispatch(game.setGameState(gameStates.GAME_STATE_PLAYING));
 const pauseGame = () => store.dispatch(game.setGameState(gameStates.GAME_STATE_PAUSE));
 const mergeBlockToBoard = (block) => store.dispatch(game.mergeBlockToBoard(block));
+const removeLines = (lineIndexes) => store.dispatch(game.removeLines(lineIndexes));
 
 main();

@@ -1,4 +1,4 @@
-import { constant, times, inRange } from 'lodash';
+import { constant, times, inRange, cloneDeep } from 'lodash';
 
 const createEmptyArray = length => times(length, constant(0));
 export const getMatrixHeight = matrix => matrix.length;
@@ -66,6 +66,21 @@ export function rotate(sourceMatrix, count = 1) {
 
   return rotatedMatrix;
 }
+
+export const getFullRowIndexes = (board) => board.reduce((acc, row, idx) => {
+  if (row.every(el => el > 0)) {
+    acc.push(idx);
+  }
+
+  return acc;
+}, []);
+
+export const removeRow = (board, idx) => {
+  const boardClone = cloneDeep(board);
+  const newRowMatrix = [createEmptyArray(getMatrixWidth(boardClone))];
+  boardClone.splice(idx, 1);
+  return newRowMatrix.concat(boardClone);
+};
 
 function rotateMatrixClockwise(sourceMatrix) {
   const height = getMatrixHeight(sourceMatrix);

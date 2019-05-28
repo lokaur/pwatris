@@ -7,6 +7,7 @@ export const MOVE_BLOCK_LEFT = 'GAME@MOVE_BLOCK_LEFT';
 export const MOVE_BLOCK_RIGHT = 'GAME@MOVE_BLOCK_RIGHT';
 export const ROTATE_BLOCK = 'GAME@ROTATE_BLOCK';
 export const MERGE_BLOCK_TO_BOARD = 'GAME@MERGE_BLOCK_TO_BOARD';
+export const REMOVE_LINES = 'GAME@REMOVE_LINES';
 
 export const resetBoard = () => ({ type: RESET_BOARD });
 export const setGameState = gameState => ({ type: SET_GAME_STATE, gameState });
@@ -17,6 +18,7 @@ export const moveBlockLeft = () => ({ type: MOVE_BLOCK_LEFT });
 export const moveBlockRight = () => ({ type: MOVE_BLOCK_RIGHT });
 export const rotateBlock = () => ({ type: ROTATE_BLOCK });
 export const mergeBlockToBoard = (block) => ({ type: MERGE_BLOCK_TO_BOARD, block });
+export const removeLines = (lineIndexes) => ({ type: REMOVE_LINES, lineIndexes });
 
 export const getGameState = ({ game }) => game.gameState;
 export const getNextBlock = ({ game }) => game.nextBlock;

@@ -3,7 +3,14 @@ import { cloneDeep } from 'lodash';
 import * as types from './actions';
 import * as gameStates from './gameState';
 import config from '../../config';
-import { getMatrixWidth, createEmptyMatrix, hasCollision, mergeMatrices, rotate } from '../../helpers/matrixHelper';
+import {
+  removeRow,
+  getMatrixWidth,
+  createEmptyMatrix,
+  hasCollision,
+  mergeMatrices,
+  rotate
+} from '../../helpers/matrixHelper';
 
 const initialState = {
   board: createEmptyMatrix(...config.boardSize),
@@ -63,6 +70,12 @@ export default function (curState = initialState, action) {
     case types.MERGE_BLOCK_TO_BOARD: {
       const { matrix, x, y } = action.block;
       return { ...curState, board: mergeMatrices(curState.board, matrix, x, y) }
+    }
+    case types.REMOVE_LINES: {
+      return {
+        ...curState,
+        board: action.lineIndexes.reduce((board, lineIndex) => removeRow(board, lineIndex), cloneDeep(curState.board))
+      };
     }
     default: {
       return curState;
