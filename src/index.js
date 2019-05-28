@@ -83,14 +83,22 @@ function update(currentTime) {
 }
 
 function checkBoard() {
-  const { matrix, x, y } = getCurrentBlock();
-  if (hasCollision(getBoard(), matrix, x, y)) {
+  if (checkCollision()) {
     placeCurrentBlockToBoard();
     collapseCompletedLines();
     setCurrentBlock(getCenterizedBlock(getNextBlock()));
     setNextBlock(getRandomBlock());
+
+    if (checkCollision()) {
+      endGame();
+    }
   }
 }
+
+const checkCollision = () => {
+  const { matrix, x, y } = getCurrentBlock();
+  return hasCollision(getBoard(), matrix, x, y);
+};
 
 function collapseCompletedLines() {
   const linesToRemove = getFullRowIndexes(getBoard());
@@ -249,6 +257,7 @@ const moveBlockRight = () => store.dispatch(game.moveBlockRight());
 const rotateBlock = () => store.dispatch(game.rotateBlock());
 const startGame = () => store.dispatch(game.setGameState(gameStates.GAME_STATE_PLAYING));
 const pauseGame = () => store.dispatch(game.setGameState(gameStates.GAME_STATE_PAUSE));
+const endGame = () => store.dispatch(game.setGameState(gameStates.GAME_STATE_LOSE));
 const mergeBlockToBoard = (block) => store.dispatch(game.mergeBlockToBoard(block));
 const removeLines = (lineIndexes) => store.dispatch(game.removeLines(lineIndexes));
 
