@@ -6,7 +6,7 @@ import { cloneDeep } from 'lodash';
 import store from './stores'
 import * as game from './stores/game';
 
-import * as gameStates from './stores/game/gameState';
+import * as GameStates from './stores/game/gameState';
 import blocksLibrary from './blocksLibrary';
 
 import App from './App';
@@ -52,6 +52,11 @@ function main() {
   window.addEventListener('keyup', onKeyUp);
   window.addEventListener('blur', onBlur);
 
+  holdKeyMovementThreshold = Math.ceil(1000 / config.holdKeyRepeatSpeed);
+  startKeyRepeatThreshold = Math.ceil(1000 / config.startRepeatSpeed);
+  downKeyMovementThreshold = Math.ceil(1000 / config.downMovementSpeed);
+  beforeRepeatDelay = Math.ceil(config.beforeRepeatDelay * 1000);
+
   initGame();
 
   ReactDOM.render(<Provider store={ store }><App/></Provider>, document.getElementById('root'));
@@ -73,7 +78,7 @@ function update(currentTime) {
   lastFrameTime = currentTime;
   handleStartInput(currentTime);
 
-  if (getGameState() !== gameStates.GAME_STATE_PLAYING) {
+  if (getGameState() !== GameStates.GAME_STATE_PLAYING) {
     return;
   }
 
@@ -118,10 +123,18 @@ function handleStartInput(currentTime) {
     if (currentTime - lastStart > startKeyRepeatThreshold) {
       lastStart = currentTime;
 
-      if (getGameState() === gameStates.GAME_STATE_PAUSE) {
-        startGame();
-      } else {
-        pauseGame();
+      switch (getGameState()) {
+        case GameStates.GAME_STATE_PAUSE:
+          startGame();
+          break;
+        case GameStates.GAME_STATE_PLAYING:
+          pauseGame();
+          break;
+        case GameStates.GAME_STATE_LOSE:
+          resetBoard();
+          initGame();
+          startGame();
+          break;
       }
     }
   } else {
@@ -223,11 +236,6 @@ function random(max, low = 0) {
 }
 
 function initGame() {
-  holdKeyMovementThreshold = Math.ceil(1000 / config.holdKeyRepeatSpeed);
-  startKeyRepeatThreshold = Math.ceil(1000 / config.startRepeatSpeed);
-  downKeyMovementThreshold = Math.ceil(1000 / config.downMovementSpeed);
-  beforeRepeatDelay = Math.ceil(config.beforeRepeatDelay * 1000);
-
   setNextBlock(getRandomBlock());
   setCurrentBlock(getCenterizedBlock(getNextBlock()));
   setNextBlock(getRandomBlock());
@@ -255,9 +263,10 @@ const moveBlockDown = () => store.dispatch(game.moveBlockDown());
 const moveBlockLeft = () => store.dispatch(game.moveBlockLeft());
 const moveBlockRight = () => store.dispatch(game.moveBlockRight());
 const rotateBlock = () => store.dispatch(game.rotateBlock());
-const startGame = () => store.dispatch(game.setGameState(gameStates.GAME_STATE_PLAYING));
-const pauseGame = () => store.dispatch(game.setGameState(gameStates.GAME_STATE_PAUSE));
-const endGame = () => store.dispatch(game.setGameState(gameStates.GAME_STATE_LOSE));
+const startGame = () => store.dispatch(game.setGameState(GameStates.GAME_STATE_PLAYING));
+const pauseGame = () => store.dispatch(game.setGameState(GameStates.GAME_STATE_PAUSE));
+const endGame = () => store.dispatch(game.setGameState(GameStates.GAME_STATE_LOSE));
+const resetBoard = () => store.dispatch(game.resetBoard());
 const mergeBlockToBoard = (block) => store.dispatch(game.mergeBlockToBoard(block));
 const removeLines = (lineIndexes) => store.dispatch(game.removeLines(lineIndexes));
 
