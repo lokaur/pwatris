@@ -6,6 +6,8 @@ export default {
   gridColor2: '#0e0032',
   baseFallRate: 1, // in seconds
   outlineThickness: 0.14,
+  boardSubstrateColor: '#FFF',
+  boardSubstrateAlpha: 0.3,
 
   // input config
   downMovementSpeed: 40,

@@ -102,12 +102,27 @@ function drawBoardSubstrate(context) {
   const [ boardWidth, boardHeight ] = config.boardSize;
   const blockSize = config.blockSize;
 
-  for (let i = 0; i < boardWidth; i++) {
-    for (let j = 0; j < boardHeight; j++) {
-      context.fillStyle = (i + j) % 2 === 0 ? config.gridColor1 : config.gridColor2;
-      context.fillRect(i * blockSize, j * blockSize, blockSize, blockSize);
-    }
+  context.globalAlpha = config.boardSubstrateAlpha;
+
+  // Draw vertical lines
+  context.strokeStyle = config.boardSubstrateColor;
+  context.lineWidth = 1;
+
+  for (let i = 1; i < boardWidth; i++) {
+    context.beginPath();
+    context.moveTo(i * blockSize, 0);
+    context.lineTo(i * blockSize, boardHeight * blockSize);
+    context.stroke();
   }
+
+  for (let i = 1; i < boardHeight; i++) {
+    context.beginPath();
+    context.moveTo(0, i * blockSize);
+    context.lineTo(boardHeight * blockSize, i * blockSize);
+    context.stroke();
+  }
+
+  context.globalAlpha = 1;
 }
 
 // TODO: use memorized selector
