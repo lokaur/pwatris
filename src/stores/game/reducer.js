@@ -16,7 +16,8 @@ const initialState = {
   board: createEmptyMatrix(...config.boardSize),
   gameState: gameStates.GAME_STATE_PAUSE,
   score: 0,
-  highScore: 0
+  highScore: 0,
+  level: 1
 };
 
 export default function (curState = initialState, action) {
@@ -82,7 +83,8 @@ export default function (curState = initialState, action) {
     case types.ADD_SCORE: {
       const newScore = curState.score + action.score;
       const newHighScore = curState.highScore + action.score > curState.highScore ? newScore : curState.highScore;
-      return { ...curState, score: newScore, highScore: newHighScore };
+      const level = Math.max(Math.floor(newScore / 1000), initialState.level);
+      return { ...curState, score: newScore, highScore: newHighScore, level };
     }
     case types.RESET_SCORE: {
       return { ...curState, score: 0 };
