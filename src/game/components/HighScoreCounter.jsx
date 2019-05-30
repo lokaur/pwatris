@@ -11,7 +11,7 @@ class HighScoreCounter extends React.Component {
   render() {
     const { highScore } = this.props;
     return (<div className='column high_score_counter'>
-      <span className='column_title'>High Score</span>
+      <span className='column_title high_score_title'>High Score</span>
       <span className='high_score_count'>{highScore}</span>
     </div>);
   }
