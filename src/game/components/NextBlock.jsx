@@ -48,7 +48,7 @@ class NextBlock extends React.Component {
   render() {
     return (
       <div className='column'>
-        <span className='next_block_title'>Next</span>
+        <span className='column_title'>Next</span>
         <div className='next_block_canvas_wrapper'>
           <canvas ref='nextBlockCanvas' className='next_block' width={ this.canvasWidth } height={ this.canvasHeight }/>
         </div>

@@ -109,6 +109,7 @@ function collapseCompletedLines() {
   const linesToRemove = getFullRowIndexes(getBoard());
   if (linesToRemove.length > 0) {
     removeLines(linesToRemove);
+    addScore(Math.pow(linesToRemove.length, 2) * 100);
   }
 }
 
@@ -132,6 +133,7 @@ function handleStartInput(currentTime) {
           break;
         case GameStates.GAME_STATE_LOSE:
           resetBoard();
+          resetScore();
           initGame();
           startGame();
           break;
@@ -271,5 +273,7 @@ const endGame = () => store.dispatch(game.setGameState(GameStates.GAME_STATE_LOS
 const resetBoard = () => store.dispatch(game.resetBoard());
 const mergeBlockToBoard = (block) => store.dispatch(game.mergeBlockToBoard(block));
 const removeLines = (lineIndexes) => store.dispatch(game.removeLines(lineIndexes));
+const addScore = (score) => store.dispatch(game.addScore(score));
+const resetScore = () => store.dispatch(game.resetScore());
 
 main();

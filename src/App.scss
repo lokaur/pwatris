@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'pcsenior';
+  src: url('./fonts/pcsenior.ttf') format('truetype');
+}
+
 html {
   background-color: #2b085c;
   overflow-y: hidden;
@@ -17,10 +22,27 @@ body {
 
 .right_container {
   order: 2;
-  min-width: 50px;
+  max-width: 140px;
 }
 
 .left_container {
   order: 0;
   min-width: 50px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+.column_title {
+  text-align: center;
+  order: 0;
+  font-size: 20px;
+  font-family: 'pcsenior', serif;
+  text-transform: uppercase;
+  color: #ffffff;
 }

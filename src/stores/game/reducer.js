@@ -15,6 +15,8 @@ import {
 const initialState = {
   board: createEmptyMatrix(...config.boardSize),
   gameState: gameStates.GAME_STATE_PAUSE,
+  score: 0,
+  highScore: 0
 };
 
 export default function (curState = initialState, action) {
@@ -76,6 +78,14 @@ export default function (curState = initialState, action) {
         ...curState,
         board: action.lineIndexes.reduce((board, lineIndex) => removeRow(board, lineIndex), cloneDeep(curState.board))
       };
+    }
+    case types.ADD_SCORE: {
+      const newScore = curState.score + action.score;
+      const newHighScore = curState.highScore + action.score > curState.highScore ? newScore : curState.highScore;
+      return { ...curState, score: newScore, highScore: newHighScore };
+    }
+    case types.RESET_SCORE: {
+      return { ...curState, score: 0 };
     }
     default: {
       return curState;
