@@ -17,7 +17,8 @@ const initialState = {
   gameState: gameStates.GAME_STATE_PAUSE,
   score: 0,
   highScore: 0,
-  level: 0
+  level: 0,
+  isMusicPlaying: true
 };
 
 export default function (curState = initialState, action) {
@@ -87,7 +88,7 @@ export default function (curState = initialState, action) {
       return { ...curState, score: newScore, highScore: newHighScore, level };
     }
     case types.RESET_SCORE: {
-      return { ...curState, score: 0 };
+      return { ...curState, score: 0, level: 0 };
     }
     default: {
       return curState;
