@@ -5,6 +5,7 @@ export default {
   gridColor1: '#5a338a',
   gridColor2: '#0e0032',
   baseFallRate: 1, // in seconds
+  fallRateModifier: 0.5,
   outlineThickness: 0.14,
   boardSubstrateColor: '#FFF',
   boardSubstrateAlpha: 0.3,

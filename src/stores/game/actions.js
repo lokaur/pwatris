@@ -1,3 +1,5 @@
+import config from '../../config';
+
 export const RESET_BOARD = 'BOARD@RESET_BOARD';
 export const SET_GAME_STATE = 'GAME@SET_GAME_STATE';
 export const SET_NEXT_BLOCK = 'GAME@SET_NEXT_BLOCK';
@@ -28,4 +30,4 @@ export const getGameState = ({ game }) => game.gameState;
 export const getNextBlock = ({ game }) => game.nextBlock;
 export const getCurrentBlock = ({ game }) => game.currentBlock;
 export const getBoard = ({ game }) => game.board;
-
+export const getFallRate = ({ game }) => config.baseFallRate + game.level * config.fallRateModifier;

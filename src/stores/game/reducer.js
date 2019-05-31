@@ -17,7 +17,7 @@ const initialState = {
   gameState: gameStates.GAME_STATE_PAUSE,
   score: 0,
   highScore: 0,
-  level: 1
+  level: 0
 };
 
 export default function (curState = initialState, action) {
@@ -83,7 +83,7 @@ export default function (curState = initialState, action) {
     case types.ADD_SCORE: {
       const newScore = curState.score + action.score;
       const newHighScore = curState.highScore + action.score > curState.highScore ? newScore : curState.highScore;
-      const level = Math.max(Math.floor(newScore / 1000), initialState.level);
+      const level = Math.floor(newScore / 1000);
       return { ...curState, score: newScore, highScore: newHighScore, level };
     }
     case types.RESET_SCORE: {

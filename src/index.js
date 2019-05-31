@@ -222,7 +222,7 @@ function handleInputDown(currentTime) {
 
 function updateBlockPosition(deltaTime) {
   lastPieceFallTime += deltaTime;
-  if (lastPieceFallTime > Math.ceil(1000 / config.baseFallRate)) {
+  if (lastPieceFallTime > Math.ceil(1000 / getFallRate())) {
     lastPieceFallTime = 0;
     moveBlockDown();
   }
@@ -261,6 +261,7 @@ const getGameState = () => getterWrapper(game.getGameState);
 const getNextBlock = () => getterWrapper(game.getNextBlock);
 const getCurrentBlock = () => getterWrapper(game.getCurrentBlock);
 const getBoard = () => getterWrapper(game.getBoard);
+const getFallRate = () => getterWrapper(game.getFallRate);
 
 // Methods
 const moveBlockDown = () => store.dispatch(game.moveBlockDown());
