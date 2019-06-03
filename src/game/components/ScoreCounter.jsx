@@ -5,18 +5,19 @@ import './ScoreCounter.scss';
 
 class ScoreCounter extends React.Component {
   static propTypes = {
-    score: PropTypes.number.isRequired
+    score: PropTypes.number.isRequired,
+    highScore: PropTypes.number.isRequired
   };
 
   render() {
-    const { score } = this.props;
+    const { score, highScore } = this.props;
     return (<div className='column score_counter'>
       <span className='column_title'>Score</span>
-      <span className={`score-count ${score > 5000 ? 'rainbow' : ''}`}>{score}</span>
+      <span className={`score-count ${score > 0 && score >= highScore ? 'rainbow' : ''}`}>{score}</span>
     </div>);
   }
 }
 
-const mapStateToProps = ({ game: { score } }) => ({ score });
+const mapStateToProps = ({ game: { score, highScore } }) => ({ score, highScore });
 
 export default connect(mapStateToProps)(ScoreCounter);
