@@ -6,28 +6,36 @@
 html {
   background-color: #2b085c;
   overflow-y: hidden;
+  overflow-x: hidden;
+  height: 100%;
 }
 
 body {
-  margin: 0;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
 }
 
 .App {
-  display: flex;
+  height: 100%;
   flex-direction: row;
-  flex: 1;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 100px;
+}
+
+.game_wrapper {
+  height: 80%;
+  width: 20%;
+  order: 0;
 }
 
 .right_container {
-  order: 2;
+  height: 80%;
+  order: 1;
   max-width: 140px;
-}
-
-.left_container {
-  order: 0;
-  min-width: 50px;
 }
 
 .column {

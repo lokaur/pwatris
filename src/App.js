@@ -16,9 +16,10 @@ const NEXT_BLOCK_HEIGHT = 4;
 
 function App() {
   return (
-    <div className="App">
-      <div className='left_container'></div>
-      <GameCanvas width={ CANVAS_WIDTH } height={ CANVAS_HEIGHT }/>
+    <div className='App'>
+      <div className='game_wrapper'>
+        <GameCanvas width={ CANVAS_WIDTH } height={ CANVAS_HEIGHT }/>
+      </div>
       <div className='right_container'>
         <NextBlock width={ NEXT_BLOCK_WIDTH } height={ NEXT_BLOCK_HEIGHT }/>
         <LevelCounter/>

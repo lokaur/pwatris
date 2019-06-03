@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Canvas from 'react-responsive-canvas';
 
-import { drawGame } from '../../helpers/renderHelper'
+import { drawGame } from '../../helpers/renderHelper';
+import config from '../../config';
 import './GameCanvas.scss';
 
 class GameCanvas extends React.Component {
@@ -13,34 +15,58 @@ class GameCanvas extends React.Component {
     currentBlock: PropTypes.object.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.onResize = this.onResize.bind(this);
+  }
+
   componentDidMount() {
-    this.drawCanvas();
+    this.ctx = this.canvas.getContext('2d');
+    this.draw();
   }
 
   componentDidUpdate() {
-    this.drawCanvas();
+    this.draw();
   }
 
-  drawCanvas() {
-    const { gameCanvas: canvas } = this.refs;
+  tryInitialize() {
+    if (!this.isInitialized) {
+      this.resize();
+      this.isInitialized = true;
+    }
+  }
 
-    if (canvas) {
-      const context = canvas.getContext('2d');
-      if (!this.frameAnimationRequest) {
-        this.frameAnimationRequest = window.requestAnimationFrame(() => {
-          const { board, currentBlock } = this.props;
-          drawGame(context, board, currentBlock);
-          this.frameAnimationRequest = undefined;
-        });
-      }
+  calculateBlockSize() {
+    const [boardWidth] = config.boardSize;
+    return this.canvas.width / boardWidth;
+  }
+
+  onResize() {
+    this.resize();
+    this.draw();
+  }
+
+  resize() {
+    this.blockSize = this.calculateBlockSize();
+    const [boardWidth, boardHeight] = config.boardSize;
+    this.canvas.width = this.blockSize * boardWidth;
+    this.canvas.height = this.blockSize * boardHeight;
+    this.canvas.style = {}; // hack
+  }
+
+  draw() {
+    if (!this.frameAnimationRequest) {
+      this.frameAnimationRequest = window.requestAnimationFrame(() => {
+        const { board, currentBlock } = this.props;
+        this.tryInitialize();
+        drawGame(this.ctx, board, currentBlock, this.blockSize);
+        this.frameAnimationRequest = undefined;
+      });
     }
   }
 
   render() {
-    const { width, height } = this.props;
-    return (
-      <canvas ref='gameCanvas' id='game' width={ width } height={ height }/>
-    )
+    return (<Canvas canvasRef={el => (this.canvas = el)} onResize={this.onResize} id='game' scale={1} />);
   }
 }
 

@@ -2,11 +2,11 @@ import blocksLibrary from '../blocksLibrary';
 import config from '../config';
 import { getMatrixHeight, getMatrixWidth } from './matrixHelper';
 
-export function drawGame(context, board, currentBlock) {
+export function drawGame(context, board, currentBlock, blockSize) {
   clearCanvas(context);
-  drawBoardSubstrate(context);
-  drawBoard(context, board);
-  drawBlock(context, currentBlock, config.blockSize);
+  drawBoardSubstrate(context, blockSize);
+  drawBoard(context, board, blockSize);
+  drawBlock(context, currentBlock, blockSize);
 }
 
 export function clearCanvas(context) {
@@ -15,8 +15,8 @@ export function clearCanvas(context) {
   context.fillRect(0, 0, width, height);
 }
 
-function drawBoard(context, board) {
-  drawMatrix(context, board, config.blockSize);
+function drawBoard(context, board, blockSize) {
+  drawMatrix(context, board, blockSize);
 }
 
 function drawBlock(context, currentBlock, blockSize) {
@@ -98,10 +98,8 @@ function drawOutlineLeft(context, color, x, y, blockSize, outlineWidth) {
   context.fill();
 }
 
-function drawBoardSubstrate(context) {
+function drawBoardSubstrate(context, blockSize) {
   const [ boardWidth, boardHeight ] = config.boardSize;
-  const blockSize = config.blockSize;
-
   context.globalAlpha = config.boardSubstrateAlpha;
 
   // Draw vertical lines

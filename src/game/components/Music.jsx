@@ -12,7 +12,7 @@ class Music extends React.Component {
     const { audio } = this.refs;
 
     audio.volume = 0.5;
-    audio.play();
+    // audio.play();
   }
 
   render() {
