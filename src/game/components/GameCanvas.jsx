@@ -9,8 +9,6 @@ import './GameCanvas.scss';
 
 class GameCanvas extends React.Component {
   static propTypes = {
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
     board: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
     currentBlock: PropTypes.object.isRequired,
   };

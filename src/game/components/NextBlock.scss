@@ -1,9 +1,21 @@
 .next_block_canvas_wrapper {
-  padding: 10px;
-  margin-top: 10px;
-  background-color: #0e0032;
+  position: relative;
+  width: 75%;
+  margin: auto;
+  padding-bottom: 75%;
 }
 
 .next_block {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   order: 1;
+}
+
+.container {
+  margin-top: 1vh;
+  padding: 1vh;
+  background-color: #0e0032;
 }
