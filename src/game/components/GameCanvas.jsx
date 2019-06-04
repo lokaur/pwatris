@@ -18,6 +18,9 @@ class GameCanvas extends React.Component {
   constructor(props) {
     super(props);
     this.onResize = this.onResize.bind(this);
+
+    const [boardWidth, boardHeight] = config.boardSize;
+    this.canvasPaddingBottom = 100 / boardWidth * boardHeight;
   }
 
   componentDidMount() {
@@ -31,7 +34,7 @@ class GameCanvas extends React.Component {
 
   tryInitialize() {
     if (!this.isInitialized) {
-      this.resize();
+      this.blockSize = this.calculateBlockSize();
       this.isInitialized = true;
     }
   }
@@ -42,16 +45,8 @@ class GameCanvas extends React.Component {
   }
 
   onResize() {
-    this.resize();
-    this.draw();
-  }
-
-  resize() {
     this.blockSize = this.calculateBlockSize();
-    const [boardWidth, boardHeight] = config.boardSize;
-    this.canvas.width = this.blockSize * boardWidth;
-    this.canvas.height = this.blockSize * boardHeight;
-    this.canvas.style = {}; // hack
+    this.draw();
   }
 
   draw() {
@@ -66,7 +61,10 @@ class GameCanvas extends React.Component {
   }
 
   render() {
-    return (<Canvas canvasRef={el => (this.canvas = el)} onResize={this.onResize} id='game' scale={1} />);
+    return (
+      <div style={{paddingBottom: `${this.canvasPaddingBottom}%`}}>
+        <Canvas canvasRef={el => (this.canvas = el)} onResize={this.onResize} id='game'/>
+      </div>);
   }
 }
 
