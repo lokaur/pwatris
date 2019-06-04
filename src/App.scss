@@ -44,14 +44,24 @@ body {
   flex-direction: column;
   align-content: center;
   justify-content: center;
-  margin: 10px;
+  margin: 2vh 1vh 1vh 1vh;
 }
 
 .column_title {
   text-align: center;
   order: 0;
-  font-size: 20px;
+  font-size: 2vh;
   font-family: 'pcsenior', serif;
   text-transform: uppercase;
   color: #ffffff;
+  line-height: 2.5vh;
+}
+
+.counter {
+  font-size: 1.8vh;
+  font-family: 'pcsenior', serif;
+  text-transform: uppercase;
+  text-align: center;
+  color: #FFFFFF;
+  margin-top: 1vh;
 }

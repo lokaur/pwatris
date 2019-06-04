@@ -13,7 +13,7 @@ class ScoreCounter extends React.Component {
     const { score, highScore } = this.props;
     return (<div className='column score_counter'>
       <span className='column_title'>Score</span>
-      <span className={`score-count ${score > 0 && score >= highScore ? 'rainbow' : ''}`}>{score}</span>
+      <span className={`counter${score > 0 && score >= highScore ? ' rainbow' : ''}`}>{score}</span>
     </div>);
   }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import './HighScoreCounter.scss';
 
 class HighScoreCounter extends React.Component {
   static propTypes = {
@@ -12,7 +11,7 @@ class HighScoreCounter extends React.Component {
     const { highScore } = this.props;
     return (<div className='column high_score_counter'>
       <span className='column_title high_score_title'>High Score</span>
-      <span className='high_score_count'>{highScore}</span>
+      <span className='counter'>{highScore}</span>
     </div>);
   }
 }

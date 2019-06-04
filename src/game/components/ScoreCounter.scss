@@ -1,19 +1,9 @@
-.score_counter {
-  margin-top: 30px;
-}
-
-.score-count {
-  font-size: 18px;
-  font-family: 'pcsenior', serif;
-  text-transform: uppercase;
-  text-align: center;
-  color: #FFFFFF;
-  margin-top: 10px;
-
+.counter {
   &.rainbow {
     background-image: repeating-linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red, violet);
     background-size: 800% 800%;
     -webkit-background-clip: text;
+    background-clip: 'text';
     -webkit-text-fill-color: transparent;
     animation: rainbow 4s ease infinite;
   }
