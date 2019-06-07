@@ -59,7 +59,7 @@ function main() {
   ReactDOM.render(<Provider store={ store }><App/></Provider>, document.getElementById('root'));
 
   // TODO: make this app PWA
-  serviceWorker.unregister();
+  serviceWorker.register();
 
   // Start main update loop
   window.requestAnimationFrame(onAnimationFrame);

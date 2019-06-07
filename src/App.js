@@ -27,7 +27,7 @@ function App() {
           <HighScoreCounter/>
           { isMobile && (
             <div className='column'>
-              <Button className='column' iconPrimary={ faPlay } iconSecondary={ faPause } actionName='mstart'/>
+              <Button className='column' iconPrimary={ faPause } iconSecondary={ faPlay } actionName='mstart'/>
             </div>) }
         </div>
       </div>
