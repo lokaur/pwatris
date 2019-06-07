@@ -1,0 +1,30 @@
+.btn-circle {
+  height: 2.5em;
+  width: 2.5em;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  padding: 1em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  font-size: 2em;
+  margin: 1vh;
+  outline: none !important;
+  outline-offset: 0 !important;
+
+  &:active {
+    background-color: red;
+  }
+}
+
+.btn-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+}

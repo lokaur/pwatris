@@ -17,10 +17,10 @@ export default {
   startRepeatSpeed: 2,
   beforeRepeatDelay: 0.25,
   controls: {
-    rotate: ['arrowup', 'keyw', 'space'],
-    left: ['arrowleft', 'keya'],
-    down: ['arrowdown', 'keys'],
-    right: ['arrowright', 'keyd'],
-    start: ['enter'],
+    rotate: ['arrowup', 'keyw', 'space', 'mrotate'],
+    left: ['arrowleft', 'keya', 'mleft'],
+    down: ['arrowdown', 'keys', 'mdown'],
+    right: ['arrowright', 'keyd', 'mright'],
+    start: ['enter', 'mstart'],
   }
 }

@@ -13,6 +13,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 import config from './config';
+import keysWatcher from './keysWatcher';
 import { getFullRowIndexes, hasCollision, rotate } from './helpers/matrixHelper';
 
 let holdKeyMovementThreshold = 0;
@@ -31,21 +32,17 @@ let isRotating = false;
 let isMovingRight = false;
 let isMovingLeft = false;
 
-let pressedKeys = {};
-
 const onKeyDown = ({ code }) => {
-  pressedKeys[ code.toLowerCase() ] = true;
+  keysWatcher.add(code);
 };
 
 const onKeyUp = ({ code }) => {
-  delete pressedKeys[ code.toLowerCase() ];
+  keysWatcher.remove(code);
 };
 
 const onBlur = () => {
-  pressedKeys = {};
+  keysWatcher.reset();
 };
-
-const isSomeKeyPressed = (...keys) => keys.reduce((defined, key) => defined || pressedKeys[ key ] !== undefined, false);
 
 function main() {
   window.addEventListener('keydown', onKeyDown);
@@ -120,7 +117,7 @@ function placeCurrentBlockToBoard() {
 }
 
 function handleStartInput(currentTime) {
-  if (isSomeKeyPressed(...config.controls.start)) {
+  if (keysWatcher.isPressed(...config.controls.start)) {
     if (currentTime - lastStart > startKeyRepeatThreshold) {
       lastStart = currentTime;
 
@@ -154,7 +151,7 @@ function handleInGameInput(currentTime) {
 }
 
 function handleInputLeft(currentTime) {
-  if (isSomeKeyPressed(...config.controls.left)) {
+  if (keysWatcher.isPressed(...config.controls.left)) {
     const moveLeft = () => {
       moveBlockLeft();
       lastLeftMove = currentTime;
@@ -176,7 +173,7 @@ function handleInputLeft(currentTime) {
 }
 
 function handleInputRight(currentTime) {
-  if (isSomeKeyPressed(...config.controls.right)) {
+  if (keysWatcher.isPressed(...config.controls.right)) {
     const moveRight = () => {
       moveBlockRight();
       lastRightMove = currentTime;
@@ -198,7 +195,7 @@ function handleInputRight(currentTime) {
 }
 
 function handleInputRotate() {
-  if (isSomeKeyPressed(...config.controls.rotate)) {
+  if (keysWatcher.isPressed(...config.controls.rotate)) {
     if (!isRotating) {
       isRotating = true;
       rotateBlock();
@@ -209,7 +206,7 @@ function handleInputRotate() {
 }
 
 function handleInputDown(currentTime) {
-  if (isSomeKeyPressed(...config.controls.down)) {
+  if (keysWatcher.isPressed(...config.controls.down)) {
     if (currentTime - lastDownMove > downKeyMovementThreshold) {
       lastDownMove = currentTime;
       lastPieceFallTime = 0;

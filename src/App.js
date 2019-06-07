@@ -7,8 +7,11 @@ import ScoreCounter from './game/components/ScoreCounter';
 import HighScoreCounter from './game/components/HighScoreCounter';
 import LevelCounter from './game/components/LevelCounter';
 import Music from './game/components/Music';
+import MobileControls from './game/components/MobileControls';
+import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 
 import './App.scss';
+import Button from './game/components/Button';
 
 function App() {
   return (
@@ -22,9 +25,10 @@ function App() {
           <LevelCounter/>
           <ScoreCounter/>
           <HighScoreCounter/>
+          { isMobile && <Button className='column' iconPrimary={ faPlay } iconSecondary={ faPause } actionName='mstart'/> }
         </div>
       </div>
-      { isMobile && <div style={ { color: '#fff' } }> Mobile!</div> }
+      { isMobile && <MobileControls/> }
       <Music/>
     </div>
   );

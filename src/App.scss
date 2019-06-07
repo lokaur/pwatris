@@ -7,11 +7,6 @@ html {
   background-color: #2b085c;
   overflow-y: hidden;
   overflow-x: hidden;
-  height: 100%;
-}
-
-#root, .App, body {
-  height: 100%;
 }
 
 .main_container {
@@ -23,9 +18,6 @@ html {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-}
-
-.App {
 }
 
 .game_wrapper {
@@ -73,7 +65,7 @@ html {
     transform: inherit;
     align-items: flex-start;
     align-content: space-between;
-    margin: 6vh 2vh;
+    margin: 6vh 2vh 2vh 2vh;
   }
 
   .game_wrapper {
