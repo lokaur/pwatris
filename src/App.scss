@@ -10,33 +10,33 @@ html {
   height: 100%;
 }
 
-body {
+#root, .App, body {
   height: 100%;
 }
 
-#root {
-  height: 100%;
-}
-
-.App {
-  height: 100%;
+.main_container {
+  width: 100%;
+  top: 50%;
+  position: absolute;
+  transform: translateY(-50%);
   flex-direction: row;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
+.App {
+}
+
 .game_wrapper {
-  height: 80%;
   width: 20%;
   order: 0;
   position: relative;
 }
 
 .right_container {
-  height: 80%;
   order: 1;
-  max-width: 140px;
+  width: 10%;
 }
 
 .column {
@@ -64,4 +64,24 @@ body {
   text-align: center;
   color: #FFFFFF;
   margin-top: 1vh;
+}
+
+@media screen and (orientation:portrait) {
+  .main_container {
+    position: inherit;
+    top: 0;
+    transform: inherit;
+    align-items: flex-start;
+    align-content: space-between;
+    margin: 6vh 2vh;
+  }
+
+  .game_wrapper {
+    height: 60%;
+    width: 60%;
+  }
+
+  .right_container {
+    width: 30%;
+  }
 }
