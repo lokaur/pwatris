@@ -1,7 +1,7 @@
 import React from 'react';
 import { faRedo, faChevronRight, faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
-import Button from './Button';
+import ControlButton from './ControlButton';
 
 import './MobileControls.scss';
 
@@ -9,10 +9,10 @@ class MobileControls extends React.Component {
   render() {
     return (
       <div className='mobile-controls'>
-        <Button iconPrimary={ faChevronLeft } actionName='mleft'/>
-        <Button iconPrimary={ faChevronRight } actionName='mright'/>
-        <Button iconPrimary={ faRedo } actionName='mrotate'/>
-        <Button iconPrimary={ faChevronDown } actionName='mdown'/>
+        <ControlButton icon={ faChevronLeft } actionName='mleft'/>
+        <ControlButton icon={ faChevronRight } actionName='mright'/>
+        <ControlButton icon={ faRedo } actionName='mrotate'/>
+        <ControlButton icon={ faChevronDown } actionName='mdown'/>
       </div>);
   }
 }

@@ -8,33 +8,30 @@ import HighScoreCounter from './game/components/HighScoreCounter';
 import LevelCounter from './game/components/LevelCounter';
 import Music from './game/components/Music';
 import MobileControls from './game/components/MobileControls';
-import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 
 import './App.scss';
-import Button from './game/components/Button';
+import StartButton from './game/components/StartButton';
 
-function App() {
-  return (
-    <div className='App'>
-      <div className='main_container'>
-        <div className='game_wrapper'>
-          <GameCanvas/>
-        </div>
-        <div className='right_container'>
-          <NextBlock/>
-          <LevelCounter/>
-          <ScoreCounter/>
-          <HighScoreCounter/>
-          { isMobile && (
-            <div className='column'>
-              <Button className='column' iconPrimary={ faPause } iconSecondary={ faPlay } actionName='mstart'/>
-            </div>) }
-        </div>
+const App = () => (
+  <div className='App'>
+    <div className='main_container'>
+      <div className='game_wrapper'>
+        <GameCanvas/>
       </div>
-      { isMobile && <MobileControls/> }
-      <Music/>
+      <div className='right_container'>
+        <NextBlock/>
+        <LevelCounter/>
+        <ScoreCounter/>
+        <HighScoreCounter/>
+        { isMobile && (
+          <div className='column'>
+            <StartButton/>
+          </div>) }
+      </div>
     </div>
-  );
-}
+    { isMobile && <MobileControls/> }
+    <Music/>
+  </div>
+);
 
 export default App;
