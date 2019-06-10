@@ -1,5 +1,14 @@
 import React from 'react';
 import { isMobile } from 'react-device-detect';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+  faPlay,
+  faPause,
+  faRedo,
+  faChevronRight,
+  faChevronLeft,
+  faChevronDown
+} from '@fortawesome/free-solid-svg-icons';
 
 import GameCanvas from './game/components/GameCanvas'
 import NextBlock from './game/components/NextBlock';
@@ -11,6 +20,8 @@ import MobileControls from './game/components/MobileControls';
 
 import './App.scss';
 import StartButton from './game/components/StartButton';
+
+library.add(faPlay, faPause, faRedo, faChevronRight, faChevronLeft, faChevronDown);
 
 const App = () => (
   <div className='App'>

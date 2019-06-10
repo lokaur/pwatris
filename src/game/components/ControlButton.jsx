@@ -15,7 +15,7 @@ const ControlButton = (props) => (
   </button>);
 
 ControlButton.propTypes = {
-  icon: PropTypes.object.isRequired,
+  icon: PropTypes.string.isRequired,
   actionName: PropTypes.string.isRequired
 };
 

@@ -1,20 +1,15 @@
 import React from 'react';
-import { faRedo, faChevronRight, faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 import ControlButton from './ControlButton';
 
 import './MobileControls.scss';
 
-class MobileControls extends React.Component {
-  render() {
-    return (
-      <div className='mobile-controls'>
-        <ControlButton icon={ faChevronLeft } actionName='mleft'/>
-        <ControlButton icon={ faChevronRight } actionName='mright'/>
-        <ControlButton icon={ faRedo } actionName='mrotate'/>
-        <ControlButton icon={ faChevronDown } actionName='mdown'/>
-      </div>);
-  }
-}
+const MobileControls = () => (
+  <div className='mobile-controls'>
+    <ControlButton icon='chevron-left' actionName='mleft'/>
+    <ControlButton icon='chevron-right' actionName='mright'/>
+    <ControlButton icon='redo' actionName='mrotate'/>
+    <ControlButton icon='chevron-down' actionName='mdown'/>
+  </div>);
 
 export default MobileControls;
