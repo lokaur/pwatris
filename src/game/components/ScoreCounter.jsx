@@ -3,20 +3,18 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './ScoreCounter.scss';
 
-class ScoreCounter extends React.Component {
-  static propTypes = {
-    score: PropTypes.number.isRequired,
-    highScore: PropTypes.number.isRequired
-  };
+const ScoreCounter = (props) =>
+  (<div className='column score_counter'>
+    <span className='column_title'>Score</span>
+    <span className={ `counter${props.score > 0 && props.score >= props.highScore ? ' rainbow' : ''}` }>
+      { props.score }
+      </span>
+  </div>);
 
-  render() {
-    const { score, highScore } = this.props;
-    return (<div className='column score_counter'>
-      <span className='column_title'>Score</span>
-      <span className={`counter${score > 0 && score >= highScore ? ' rainbow' : ''}`}>{score}</span>
-    </div>);
-  }
-}
+ScoreCounter.propTypes = {
+  score: PropTypes.number.isRequired,
+  highScore: PropTypes.number.isRequired
+};
 
 const mapStateToProps = ({ game: { score, highScore } }) => ({ score, highScore });
 
