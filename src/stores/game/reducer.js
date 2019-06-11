@@ -14,7 +14,7 @@ import {
 
 const initialState = {
   board: createEmptyMatrix(...config.boardSize),
-  gameState: gameStates.GAME_STATE_PAUSE,
+  gameState: gameStates.GAME_STATE_INIT,
   score: 0,
   highScore: 0,
   level: 0,

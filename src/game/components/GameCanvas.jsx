@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Canvas from 'react-responsive-canvas';
 
+import GameState from './GameState';
 import { drawGame } from '../../helpers/renderHelper';
 import config from '../../config';
 import './GameCanvas.scss';
@@ -17,7 +18,7 @@ class GameCanvas extends React.Component {
     super(props);
     this.onResize = this.onResize.bind(this);
 
-    const [boardWidth, boardHeight] = config.boardSize;
+    const [ boardWidth, boardHeight ] = config.boardSize;
     this.canvasPaddingBottom = 100 / boardWidth * boardHeight;
   }
 
@@ -38,7 +39,7 @@ class GameCanvas extends React.Component {
   }
 
   calculateBlockSize() {
-    const [boardWidth] = config.boardSize;
+    const [ boardWidth ] = config.boardSize;
     return this.canvas.width / boardWidth;
   }
 
@@ -60,8 +61,9 @@ class GameCanvas extends React.Component {
 
   render() {
     return (
-      <div style={{paddingBottom: `${this.canvasPaddingBottom}%`}}>
-        <Canvas canvasRef={el => (this.canvas = el)} onResize={this.onResize} id='game'/>
+      <div style={ { paddingBottom: `${this.canvasPaddingBottom}%` } }>
+        <Canvas canvasRef={ el => (this.canvas = el) } onResize={ this.onResize } id='game'/>
+        <GameState/>
       </div>);
   }
 }
