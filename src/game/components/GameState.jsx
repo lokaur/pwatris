@@ -29,7 +29,7 @@ const getGameStateText = (state) => {
 const GameState = (props) => (props.gameState !== gameStates.GAME_STATE_PLAYING &&
   <div id='game_state'><span>{ getGameStateText(props.gameState) }</span></div>);
 
-GameState.PropTypes = {
+GameState.propTypes = {
   gameState: PropTypes.string.isRequired
 };
 

@@ -20,6 +20,7 @@ import MobileControls from './game/components/MobileControls';
 
 import './App.scss';
 import StartButton from './game/components/StartButton';
+import ControlsHelp from './game/components/ControlsHelp';
 
 library.add(faPlay, faPause, faRedo, faChevronRight, faChevronLeft, faChevronDown);
 
@@ -38,6 +39,7 @@ const App = () => (
           <div className='column'>
             <StartButton/>
           </div>) }
+        { !isMobile && <ControlsHelp/> }
       </div>
     </div>
     { isMobile && <MobileControls/> }
