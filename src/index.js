@@ -121,6 +121,7 @@ function handleStartInput(currentTime) {
       lastStart = currentTime;
 
       switch (getGameState()) {
+        case GameStates.GAME_STATE_INIT:
         case GameStates.GAME_STATE_PAUSE:
           startGame();
           break;
