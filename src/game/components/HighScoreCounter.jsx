@@ -2,12 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const HighScoreCounter = (props) => {
-  return (<div className='column high_score_counter'>
+const HighScoreCounter = (props) => (
+  <div className='column high_score_counter'>
     <span className='column_title high_score_title'>High Score</span>
     <span className='counter'>{ props.highScore }</span>
-  </div>)
-};
+  </div>);
 
 HighScoreCounter.propTypes = {
   highScore: PropTypes.number.isRequired

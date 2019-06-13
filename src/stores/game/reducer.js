@@ -11,14 +11,18 @@ import {
   mergeMatrices,
   rotate
 } from '../../helpers/matrixHelper';
+import { getCenterizedBlock, getRandomBlock } from '../../helpers/blocksHelper';
 
 const initialState = {
   board: createEmptyMatrix(...config.boardSize),
+  nextBlock: getRandomBlock(),
+  currentBlock: getCenterizedBlock(getRandomBlock()),
   gameState: gameStates.GAME_STATE_INIT,
   score: 0,
   highScore: 0,
   level: 0,
-  isMusicPlaying: true
+  lines: 0,
+  isMusicPlaying: false
 };
 
 export default function (curState = initialState, action) {
@@ -28,12 +32,6 @@ export default function (curState = initialState, action) {
     }
     case types.SET_GAME_STATE: {
       return { ...curState, gameState: action.gameState };
-    }
-    case types.SET_NEXT_BLOCK: {
-      return { ...curState, nextBlock: action.block };
-    }
-    case types.SET_CURRENT_BLOCK: {
-      return { ...curState, currentBlock: action.block };
     }
     case types.MOVE_BLOCK_DOWN: {
       const blockClone = cloneDeep(curState.currentBlock);
@@ -76,19 +74,33 @@ export default function (curState = initialState, action) {
       return { ...curState, board: mergeMatrices(curState.board, matrix, x, y) }
     }
     case types.REMOVE_LINES: {
+      const lines = action.lineIndexes.length + curState.lines;
+      const level = Math.floor(lines / 10);
       return {
         ...curState,
-        board: action.lineIndexes.reduce((board, lineIndex) => removeRow(board, lineIndex), cloneDeep(curState.board))
+        board: action.lineIndexes.reduce((board, lineIndex) => removeRow(board, lineIndex), cloneDeep(curState.board)),
+        lines,
+        level
       };
     }
     case types.ADD_SCORE: {
-      const score = curState.score + action.score;
-      const highScore = score > curState.highScore ? score : curState.highScore;
-      const level = Math.floor(score / 1000);
-      return { ...curState, score, highScore, level };
+      return {
+        ...curState,
+        score: curState.score + action.score,
+        highScore: curState.score + action.score > curState.highScore ? curState.score + action.score : curState.highScore
+      };
     }
     case types.RESET_SCORE: {
-      return { ...curState, score: 0, level: 0 };
+      return { ...curState, score: 0, level: 0, lines: 0 };
+    }
+    case types.TOGGLE_MUSIC: {
+      return { ...curState, isMusicPlaying: !curState.isMusicPlaying };
+    }
+    case types.CHANGE_BLOCKS: {
+      return { ...curState, currentBlock: getCenterizedBlock(curState.nextBlock), nextBlock: getRandomBlock() };
+    }
+    case types.RANDOMIZE_BLOCKS: {
+      return { ...curState, currentBlock: getCenterizedBlock(getRandomBlock()), nextBlock: getRandomBlock() };
     }
     default: {
       return curState;

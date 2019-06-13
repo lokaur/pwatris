@@ -7,7 +7,9 @@ import {
   faRedo,
   faChevronRight,
   faChevronLeft,
-  faChevronDown
+  faChevronDown,
+  faVolumeUp,
+  faVolumeMute
 } from '@fortawesome/free-solid-svg-icons';
 
 import GameCanvas from './game/components/GameCanvas'
@@ -21,8 +23,9 @@ import MobileControls from './game/components/MobileControls';
 import './App.scss';
 import StartButton from './game/components/StartButton';
 import ControlsHelp from './game/components/ControlsHelp';
+import SoundControls from './game/components/SoundControls';
 
-library.add(faPlay, faPause, faRedo, faChevronRight, faChevronLeft, faChevronDown);
+library.add(faPlay, faPause, faRedo, faChevronRight, faChevronLeft, faChevronDown, faVolumeUp, faVolumeMute);
 
 const App = () => (
   <div className='App'>
@@ -35,6 +38,7 @@ const App = () => (
         <LevelCounter/>
         <ScoreCounter/>
         <HighScoreCounter/>
+        <SoundControls/>
         { isMobile && (
           <div className='column'>
             <StartButton/>
