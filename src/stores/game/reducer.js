@@ -18,6 +18,7 @@ const initialState = {
   score: 0,
   highScore: 0,
   level: 0,
+  lines: 0,
   isMusicPlaying: false
 };
 
@@ -76,16 +77,21 @@ export default function (curState = initialState, action) {
       return { ...curState, board: mergeMatrices(curState.board, matrix, x, y) }
     }
     case types.REMOVE_LINES: {
+      const lines = action.lineIndexes.length + curState.lines;
+      const level = Math.floor(lines / 10);
       return {
         ...curState,
-        board: action.lineIndexes.reduce((board, lineIndex) => removeRow(board, lineIndex), cloneDeep(curState.board))
+        board: action.lineIndexes.reduce((board, lineIndex) => removeRow(board, lineIndex), cloneDeep(curState.board)),
+        lines,
+        level
       };
     }
     case types.ADD_SCORE: {
-      const score = curState.score + action.score;
-      const highScore = score > curState.highScore ? score : curState.highScore;
-      const level = Math.floor(score / 1000);
-      return { ...curState, score, highScore, level };
+      return {
+        ...curState,
+        score: curState.score + action.score,
+        highScore: curState.score + action.score > curState.highScore ? curState.score + action.score : curState.highScore
+      };
     }
     case types.RESET_SCORE: {
       return { ...curState, score: 0, level: 0 };
