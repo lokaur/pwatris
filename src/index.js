@@ -41,12 +41,14 @@ const onKeyUp = ({ code }) => {
 
 const onBlur = () => {
   keysWatcher.reset();
+  pauseGame();
 };
 
 function main() {
   window.addEventListener('keydown', onKeyDown);
   window.addEventListener('keyup', onKeyUp);
   window.addEventListener('blur', onBlur);
+  window.onbeforeunload = onBlur;
 
   holdKeyMovementThreshold = Math.ceil(1000 / config.holdKeyRepeatSpeed);
   startKeyRepeatThreshold = Math.ceil(1000 / config.startRepeatSpeed);
