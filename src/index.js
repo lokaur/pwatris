@@ -7,14 +7,13 @@ import store from './stores'
 import * as game from './stores/game';
 
 import * as GameStates from './stores/game/gameState';
-import blocksLibrary from './blocksLibrary';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 import config from './config';
 import keysWatcher from './keysWatcher';
-import { getFullRowIndexes, hasCollision, rotate } from './helpers/matrixHelper';
+import { getFullRowIndexes, hasCollision } from './helpers/matrixHelper';
 
 let holdKeyMovementThreshold = 0;
 let startKeyRepeatThreshold = 0;
@@ -54,8 +53,6 @@ function main() {
   downKeyMovementThreshold = Math.ceil(1000 / config.downMovementSpeed);
   beforeRepeatDelay = Math.ceil(config.beforeRepeatDelay * 1000);
 
-  initGame();
-
   ReactDOM.render(<Provider store={ store }><App/></Provider>, document.getElementById('root'));
 
   serviceWorker.register();
@@ -87,8 +84,7 @@ function checkBoard() {
   if (checkCollision()) {
     placeCurrentBlockToBoard();
     collapseCompletedLines();
-    setCurrentBlock(getCenterizedBlock(getNextBlock()));
-    setNextBlock(getRandomBlock());
+    changeBlocks();
 
     if (checkCollision()) {
       endGame();
@@ -131,7 +127,7 @@ function handleStartInput(currentTime) {
         case GameStates.GAME_STATE_LOSE:
           resetBoard();
           resetScore();
-          initGame();
+          randomizeBlocks();
           startGame();
           break;
         default:
@@ -225,37 +221,9 @@ function updateBlockPosition(deltaTime) {
   }
 }
 
-function getRandomBlock() {
-  const block = blocksLibrary[ random(blocksLibrary.length) ];
-  const rotationCount = random(4);
-  block.matrix = rotate(block.matrix, rotationCount);
-  return block;
-}
-
-function random(max, low = 0) {
-  return Math.floor(Math.random() * (max - low) + low);
-}
-
-function initGame() {
-  setNextBlock(getRandomBlock());
-  setCurrentBlock(getCenterizedBlock(getNextBlock()));
-  setNextBlock(getRandomBlock());
-}
-
-function getCenterizedBlock(block) {
-  const blockClone = cloneDeep(block);
-  blockClone.x = Math.floor((config.boardSize[ 0 ] - blockClone.matrix[ 0 ].length) / 2);
-  return blockClone;
-}
-
-// Setters
-const setNextBlock = block => store.dispatch(game.setNextBlock(block));
-const setCurrentBlock = block => store.dispatch(game.setCurrentBlock(block));
-
 // Getters
 const getterWrapper = getter => getter(store.getState());
 const getGameState = () => getterWrapper(game.getGameState);
-const getNextBlock = () => getterWrapper(game.getNextBlock);
 const getCurrentBlock = () => getterWrapper(game.getCurrentBlock);
 const getBoard = () => getterWrapper(game.getBoard);
 const getFallRate = () => getterWrapper(game.getFallRate);
@@ -273,5 +241,7 @@ const mergeBlockToBoard = (block) => store.dispatch(game.mergeBlockToBoard(block
 const removeLines = (lineIndexes) => store.dispatch(game.removeLines(lineIndexes));
 const addScore = (score) => store.dispatch(game.addScore(score));
 const resetScore = () => store.dispatch(game.resetScore());
+const changeBlocks = () => store.dispatch(game.changeBlocks());
+const randomizeBlocks = () => store.dispatch(game.randomizeBlocks());
 
 main();

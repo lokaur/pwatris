@@ -1,12 +1,21 @@
 import { createStore, combineReducers } from 'redux';
 
+import { loadState, saveState } from '../helpers/localStorageHelper';
+
 import game from './game/reducer';
 
 export const reducers = combineReducers(
   { game }
 );
 
-export default createStore(
+const persistedState = loadState();
+const store = createStore(
   reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  persistedState
 );
+
+store.subscribe(() => {
+  saveState(store.getState());
+});
+
+export default store;
