@@ -91,7 +91,7 @@ export default function (curState = initialState, action) {
       };
     }
     case types.RESET_SCORE: {
-      return { ...curState, score: 0, level: 0 };
+      return { ...curState, score: 0, level: 0, lines: 0 };
     }
     case types.TOGGLE_MUSIC: {
       return { ...curState, isMusicPlaying: !curState.isMusicPlaying };
