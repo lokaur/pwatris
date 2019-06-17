@@ -10,7 +10,7 @@ PWA implementation of classic tetris game written on React/Redux. Includes mobil
 ## Requirements
 * Node.js v.12.*
 
-## Installing
+## Run
 
 **Dev server:**
 ```bash
