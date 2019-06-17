@@ -8,8 +8,7 @@
     "tetris",
     "react",
     "redux",
-    "canvas",
-    "typescript"
+    "canvas"
   ],
   "license": "(Apache-2.0)",
   "main": "index.js",
