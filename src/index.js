@@ -6,7 +6,7 @@ import { cloneDeep } from 'lodash';
 import store from './stores'
 import * as game from './stores/game';
 
-import * as gameStates from './stores/game/gameState';
+import * as GameStates from './stores/game/gameState';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -41,7 +41,7 @@ const onKeyUp = ({ code }) => {
 
 const onBlur = () => {
   keysWatcher.reset();
-  if (getGameState() === gameStates.GAME_STATE_PLAYING) {
+  if (getGameState() === GameStates.GAME_STATE_PLAYING) {
     pauseGame();
   }
 };
