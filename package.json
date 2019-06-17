@@ -1,7 +1,18 @@
 {
-  "name": "tetris-pwa",
-  "version": "0.1.0",
+  "name": "pwatris",
+  "version": "1.0.0",
   "private": true,
+  "homepage": "https://pwatris.herokuapp.com/",
+  "author": "Andrey Martynov <andremartynov@gmail.com>",
+  "keywords": [
+    "tetris",
+    "react",
+    "redux",
+    "canvas",
+    "typescript"
+  ],
+  "license": "(Apache-2.0)",
+  "main": "index.js",
   "dependencies": {
     "@babel/core": "7.4.3",
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
