@@ -2,6 +2,8 @@ import blocksLibrary from '../blocksLibrary';
 import config from '../config';
 import { getMatrixHeight, getMatrixWidth } from './matrixHelper';
 
+const overlapColor = config.overlapColor;
+
 export function drawGame(context, board, currentBlock, blockSize) {
   clearCanvas(context);
   drawBoardSubstrate(context, blockSize);
@@ -37,7 +39,16 @@ export function drawMatrix(context, matrix, blockSize, offsetX = 0, offsetY = 0)
   }
 }
 
-function drawRect(context, row, col, id, blockSize) {
+function drawRect(context, row, col, val, blockSize) {
+  let id;
+  let overlapOpacity = -1;
+  if (!Number.isInteger(val)) {
+    id = Math.trunc(val);
+    overlapOpacity = (val - id).toFixed(2) * 10;
+  } else {
+    id = val;
+  }
+
   const colors = getColorsByBlockId(id);
   const x = row * blockSize;
   const y = col * blockSize;
@@ -52,6 +63,10 @@ function drawRect(context, row, col, id, blockSize) {
   // Drawing center rectangle
   context.fillStyle = colors.center;
   context.fillRect(x + outlineWidth, y + outlineWidth, blockSize - doubleOutlineWidth, blockSize - doubleOutlineWidth);
+
+  if (overlapOpacity !== -1) {
+    drawOverlap(context, x, y, blockSize, overlapOpacity);
+  }
 }
 
 function drawOutlineTop(context, color, x, y, blockSize, outlineWidth) {
@@ -96,6 +111,13 @@ function drawOutlineLeft(context, color, x, y, blockSize, outlineWidth) {
   context.lineTo(x + outlineWidth, y + outlineWidth);
   context.lineTo(x, y);
   context.fill();
+}
+
+function drawOverlap(context, x, y, blockSize, alpha) {
+  context.globalAlpha = alpha;
+  context.fillStyle = overlapColor;
+  context.fillRect(x, y, blockSize, blockSize);
+  context.globalAlpha = 1;
 }
 
 function drawBoardSubstrate(context, blockSize) {

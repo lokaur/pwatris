@@ -1,6 +1,7 @@
 import config from '../../config';
 
 export const RESET_BOARD = 'BOARD@RESET_BOARD';
+export const UPDATE_LINES_OVERLAP = 'BOARD@UPDATE_LINES_OVERLAP';
 export const SET_GAME_STATE = 'GAME@SET_GAME_STATE';
 export const MOVE_BLOCK_DOWN = 'GAME@MOVE_BLOCK_DOWN';
 export const MOVE_BLOCK_LEFT = 'GAME@MOVE_BLOCK_LEFT';
@@ -15,6 +16,7 @@ export const CHANGE_BLOCKS = 'GAME@CHANGE_BLOCKS';
 export const RANDOMIZE_BLOCKS = 'GAME@RANDOMIZE_BLOCKS';
 
 export const resetBoard = () => ({ type: RESET_BOARD });
+export const updateLinesOverlap = (percent, lines) => ({ type: UPDATE_LINES_OVERLAP, lines, percent });
 export const setGameState = gameState => ({ type: SET_GAME_STATE, gameState });
 export const moveBlockDown = () => ({ type: MOVE_BLOCK_DOWN });
 export const moveBlockLeft = () => ({ type: MOVE_BLOCK_LEFT });

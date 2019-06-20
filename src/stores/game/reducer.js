@@ -9,7 +9,8 @@ import {
   createEmptyMatrix,
   hasCollision,
   mergeMatrices,
-  rotate
+  rotate,
+  updateLinesOverlap
 } from '../../helpers/matrixHelper';
 import { getCenterizedBlock, getRandomBlock } from '../../helpers/blocksHelper';
 
@@ -29,6 +30,10 @@ export default function (curState = initialState, action) {
   switch (action.type) {
     case types.RESET_BOARD: {
       return { ...curState, board: createEmptyMatrix(...config.boardSize) };
+    }
+    case types.UPDATE_LINES_OVERLAP: {
+      updateLinesOverlap(action.lines, action.percent);
+      return curState;
     }
     case types.SET_GAME_STATE: {
       return { ...curState, gameState: action.gameState };

@@ -10,6 +10,8 @@ export default {
   outlineThickness: 0.14,
   boardSubstrateColor: '#FFF',
   boardSubstrateAlpha: 0.3,
+  overlapColor: '#FFF',
+  lineCollapseTime: 500, // in millis
 
   // input config
   downMovementSpeed: 40,

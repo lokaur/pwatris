@@ -20,6 +20,10 @@ let startKeyRepeatThreshold = 0;
 let downKeyMovementThreshold = 0;
 let beforeRepeatDelay = 0;
 
+let linesCollapseAnimTimeCounter = 0;
+const linesCollapseAnimTime = config.lineCollapseTime;
+let linesToRemove = [];
+
 let lastFrameTime = 0;
 let lastPieceFallTime = 0;
 let lastDownMove = 0;
@@ -75,13 +79,32 @@ function update(currentTime) {
   lastFrameTime = currentTime;
   handleStartInput(currentTime);
 
-  if (getGameState() !== GameStates.GAME_STATE_PLAYING) {
+  const gameState = getGameState();
+
+  if (gameState === GameStates.GAME_STATE_LINES_REMOVING) {
+    processLineRemovingAnimation(deltaTime);
+  }
+
+  if (gameState !== GameStates.GAME_STATE_PLAYING) {
     return;
   }
 
   handleInGameInput(currentTime);
   updateBlockPosition(deltaTime);
   checkBoard();
+}
+
+function processLineRemovingAnimation(deltaTime) {
+  linesCollapseAnimTimeCounter += deltaTime;
+  if (linesCollapseAnimTimeCounter < linesCollapseAnimTime) {
+    updateLinesOverlap(linesCollapseAnimTimeCounter / linesCollapseAnimTime, linesToRemove);
+  } else {
+    removeLines(linesToRemove);
+    addScore(Math.pow(linesToRemove.length, 2) * 100);
+    linesToRemove = [];
+    linesCollapseAnimTimeCounter = 0;
+    startGame();
+  }
 }
 
 function checkBoard() {
@@ -102,10 +125,9 @@ const checkCollision = () => {
 };
 
 function collapseCompletedLines() {
-  const linesToRemove = getFullRowIndexes(getBoard());
+  linesToRemove = getFullRowIndexes(getBoard());
   if (linesToRemove.length > 0) {
-    removeLines(linesToRemove);
-    addScore(Math.pow(linesToRemove.length, 2) * 100);
+    startRemoveLines();
   }
 }
 
@@ -240,6 +262,8 @@ const rotateBlock = () => store.dispatch(game.rotateBlock());
 const startGame = () => store.dispatch(game.setGameState(GameStates.GAME_STATE_PLAYING));
 const pauseGame = () => store.dispatch(game.setGameState(GameStates.GAME_STATE_PAUSE));
 const endGame = () => store.dispatch(game.setGameState(GameStates.GAME_STATE_LOSE));
+const startRemoveLines = () => store.dispatch(game.setGameState(GameStates.GAME_STATE_LINES_REMOVING));
+const updateLinesOverlap = (percent, indexes) => store.dispatch(game.updateLinesOverlap(percent, indexes));
 const resetBoard = () => store.dispatch(game.resetBoard());
 const mergeBlockToBoard = (block) => store.dispatch(game.mergeBlockToBoard(block));
 const removeLines = (lineIndexes) => store.dispatch(game.removeLines(lineIndexes));

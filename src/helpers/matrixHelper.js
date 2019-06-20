@@ -52,6 +52,11 @@ export function mergeMatrices(board, block, offsetX, offsetY) {
   }));
 }
 
+export function updateLinesOverlap(lines, percent) {
+  // console.log(`Update ${lines.length}; Percent: ${percent}`);
+  // console.log(lines);
+}
+
 // Rotates matrix clockwise
 export function rotate(sourceMatrix, count = 1) {
   if (count === 0) {
