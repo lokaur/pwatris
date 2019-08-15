@@ -9,7 +9,7 @@ import {
   createEmptyMatrix,
   hasCollision,
   mergeMatrices,
-  rotate
+  rotate,
 } from '../../helpers/matrixHelper';
 import { getCenterizedBlock, getRandomBlock } from '../../helpers/blocksHelper';
 
@@ -22,10 +22,10 @@ const initialState = {
   highScore: 0,
   level: 0,
   lines: 0,
-  isMusicPlaying: false
+  isMusicPlaying: false,
 };
 
-export default function (curState = initialState, action) {
+export default function(curState = initialState, action) {
   switch (action.type) {
     case types.RESET_BOARD: {
       return { ...curState, board: createEmptyMatrix(...config.boardSize) };
@@ -41,7 +41,14 @@ export default function (curState = initialState, action) {
     case types.MOVE_BLOCK_LEFT: {
       const currentBlock = curState.currentBlock;
 
-      if (hasCollision(curState.board, currentBlock.matrix, currentBlock.x - 1, currentBlock.y)) {
+      if (
+        hasCollision(
+          curState.board,
+          currentBlock.matrix,
+          currentBlock.x - 1,
+          currentBlock.y,
+        )
+      ) {
         return curState;
       }
 
@@ -52,7 +59,14 @@ export default function (curState = initialState, action) {
     case types.MOVE_BLOCK_RIGHT: {
       const currentBlock = curState.currentBlock;
 
-      if (hasCollision(curState.board, currentBlock.matrix, currentBlock.x + 1, currentBlock.y)) {
+      if (
+        hasCollision(
+          curState.board,
+          currentBlock.matrix,
+          currentBlock.x + 1,
+          currentBlock.y,
+        )
+      ) {
         return curState;
       }
 
@@ -71,23 +85,32 @@ export default function (curState = initialState, action) {
     }
     case types.MERGE_BLOCK_TO_BOARD: {
       const { matrix, x, y } = action.block;
-      return { ...curState, board: mergeMatrices(curState.board, matrix, x, y) }
+      return {
+        ...curState,
+        board: mergeMatrices(curState.board, matrix, x, y),
+      };
     }
     case types.REMOVE_LINES: {
       const lines = action.lineIndexes.length + curState.lines;
       const level = Math.floor(lines / 10);
       return {
         ...curState,
-        board: action.lineIndexes.reduce((board, lineIndex) => removeRow(board, lineIndex), cloneDeep(curState.board)),
+        board: action.lineIndexes.reduce(
+          (board, lineIndex) => removeRow(board, lineIndex),
+          cloneDeep(curState.board),
+        ),
         lines,
-        level
+        level,
       };
     }
     case types.ADD_SCORE: {
       return {
         ...curState,
         score: curState.score + action.score,
-        highScore: curState.score + action.score > curState.highScore ? curState.score + action.score : curState.highScore
+        highScore:
+          curState.score + action.score > curState.highScore
+            ? curState.score + action.score
+            : curState.highScore,
       };
     }
     case types.RESET_SCORE: {
@@ -97,10 +120,18 @@ export default function (curState = initialState, action) {
       return { ...curState, isMusicPlaying: !curState.isMusicPlaying };
     }
     case types.CHANGE_BLOCKS: {
-      return { ...curState, currentBlock: getCenterizedBlock(curState.nextBlock), nextBlock: getRandomBlock() };
+      return {
+        ...curState,
+        currentBlock: getCenterizedBlock(curState.nextBlock),
+        nextBlock: getRandomBlock(),
+      };
     }
     case types.RANDOMIZE_BLOCKS: {
-      return { ...curState, currentBlock: getCenterizedBlock(getRandomBlock()), nextBlock: getRandomBlock() };
+      return {
+        ...curState,
+        currentBlock: getCenterizedBlock(getRandomBlock()),
+        nextBlock: getRandomBlock(),
+      };
     }
     default: {
       return curState;
@@ -112,7 +143,9 @@ function validateRotation(rotatedBlock, board) {
   const blockWidth = getMatrixWidth(rotatedBlock.matrix);
   let offsetX = 1;
 
-  while (hasCollision(board, rotatedBlock.matrix, rotatedBlock.x, rotatedBlock.y)) {
+  while (
+    hasCollision(board, rotatedBlock.matrix, rotatedBlock.x, rotatedBlock.y)
+  ) {
     rotatedBlock.x += offsetX;
     offsetX = offsetX > 0 ? -offsetX : -offsetX + 1;
 

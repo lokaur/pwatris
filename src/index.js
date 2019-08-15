@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { cloneDeep } from 'lodash';
 
-import store from './stores'
+import store from './stores';
 import * as game from './stores/game';
 
 import * as GameStates from './stores/game/gameState';
@@ -57,7 +57,12 @@ function main() {
   downKeyMovementThreshold = Math.ceil(1000 / config.downMovementSpeed);
   beforeRepeatDelay = Math.ceil(config.beforeRepeatDelay * 1000);
 
-  ReactDOM.render(<Provider store={ store }><App/></Provider>, document.getElementById('root'));
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('root'),
+  );
 
   serviceWorker.register();
 
@@ -159,9 +164,11 @@ function handleInputLeft(currentTime) {
 
     const deltaTime = currentTime - lastLeftMove;
     if (deltaTime > holdKeyMovementThreshold) {
-      if (lastLeftMove === 0) { // No delay on first press
+      if (lastLeftMove === 0) {
+        // No delay on first press
         moveLeft();
-      } else if (isMovingLeft || deltaTime > beforeRepeatDelay) { // Delay after first move
+      } else if (isMovingLeft || deltaTime > beforeRepeatDelay) {
+        // Delay after first move
         isMovingLeft = true;
         moveLeft();
       }
@@ -181,9 +188,11 @@ function handleInputRight(currentTime) {
 
     const deltaTime = currentTime - lastRightMove;
     if (deltaTime > holdKeyMovementThreshold) {
-      if (lastRightMove === 0) { // No delay on first press
+      if (lastRightMove === 0) {
+        // No delay on first press
         moveRight();
-      } else if (isMovingRight || deltaTime > beforeRepeatDelay) { // Delay after first move
+      } else if (isMovingRight || deltaTime > beforeRepeatDelay) {
+        // Delay after first move
         isMovingRight = true;
         moveRight();
       }
@@ -237,13 +246,18 @@ const moveBlockDown = () => store.dispatch(game.moveBlockDown());
 const moveBlockLeft = () => store.dispatch(game.moveBlockLeft());
 const moveBlockRight = () => store.dispatch(game.moveBlockRight());
 const rotateBlock = () => store.dispatch(game.rotateBlock());
-const startGame = () => store.dispatch(game.setGameState(GameStates.GAME_STATE_PLAYING));
-const pauseGame = () => store.dispatch(game.setGameState(GameStates.GAME_STATE_PAUSE));
-const endGame = () => store.dispatch(game.setGameState(GameStates.GAME_STATE_LOSE));
+const startGame = () =>
+  store.dispatch(game.setGameState(GameStates.GAME_STATE_PLAYING));
+const pauseGame = () =>
+  store.dispatch(game.setGameState(GameStates.GAME_STATE_PAUSE));
+const endGame = () =>
+  store.dispatch(game.setGameState(GameStates.GAME_STATE_LOSE));
 const resetBoard = () => store.dispatch(game.resetBoard());
-const mergeBlockToBoard = (block) => store.dispatch(game.mergeBlockToBoard(block));
-const removeLines = (lineIndexes) => store.dispatch(game.removeLines(lineIndexes));
-const addScore = (score) => store.dispatch(game.addScore(score));
+const mergeBlockToBoard = block =>
+  store.dispatch(game.mergeBlockToBoard(block));
+const removeLines = lineIndexes =>
+  store.dispatch(game.removeLines(lineIndexes));
+const addScore = score => store.dispatch(game.addScore(score));
 const resetScore = () => store.dispatch(game.resetScore());
 const changeBlocks = () => store.dispatch(game.changeBlocks());
 const randomizeBlocks = () => store.dispatch(game.randomizeBlocks());

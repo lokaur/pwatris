@@ -9,7 +9,7 @@ const createBlock = (name, colors, matrix) => {
     matrix: matrix.map(r => r.map(v => v === 0 ? 0 : id)),
     x: 0,
     y: 0
-  }
+  };
 };
 
 const blocks = [

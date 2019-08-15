@@ -91,8 +91,8 @@ function rotateMatrixClockwise(sourceMatrix) {
 
   times(height, (row) => {
     times(width, (column) => {
-      flippedMatrix[ column ][ row ] = sourceMatrix[ row ][ column ]
-    })
+      flippedMatrix[ column ][ row ] = sourceMatrix[ row ][ column ];
+    });
   });
 
   return flippedMatrix.map(row => row.reverse());

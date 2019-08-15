@@ -6,7 +6,7 @@ import * as gameStates from '../../stores/game/gameState';
 
 import './GameState.scss';
 
-const getGameStateText = (state) => {
+const getGameStateText = state => {
   let text;
   switch (state) {
     case gameStates.GAME_STATE_INIT:
@@ -26,11 +26,15 @@ const getGameStateText = (state) => {
   return text;
 };
 
-const GameState = (props) => (props.gameState !== gameStates.GAME_STATE_PLAYING &&
-  <div id='game_state'><span>{ getGameStateText(props.gameState) }</span></div>);
+const GameState = props =>
+  props.gameState !== gameStates.GAME_STATE_PLAYING && (
+    <div id='game_state'>
+      <span>{getGameStateText(props.gameState)}</span>
+    </div>
+  );
 
 GameState.propTypes = {
-  gameState: PropTypes.string.isRequired
+  gameState: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = ({ game: { gameState } }) => ({ gameState });
