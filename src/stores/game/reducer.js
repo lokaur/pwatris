@@ -1,5 +1,3 @@
-import { cloneDeep } from 'lodash';
-
 import * as types from './actions';
 import * as gameStates from './gameState';
 import config from '../../config';
@@ -11,7 +9,12 @@ import {
   mergeMatrices,
   rotate,
 } from '../../helpers/matrixHelper';
-import { getCenterizedBlock, getRandomBlock } from '../../helpers/blocksHelper';
+import {
+  getCenterizedBlock,
+  getRandomBlock,
+  cloneBlock,
+} from '../../helpers/blocksHelper';
+import { cloneMatrix } from '../../helpers/matrixHelper';
 
 const initialState = {
   board: createEmptyMatrix(...config.boardSize),
@@ -34,7 +37,7 @@ export default function(curState = initialState, action) {
       return { ...curState, gameState: action.gameState };
     }
     case types.MOVE_BLOCK_DOWN: {
-      const blockClone = cloneDeep(curState.currentBlock);
+      const blockClone = cloneBlock(curState.currentBlock);
       blockClone.y += 1;
       return { ...curState, currentBlock: blockClone };
     }
@@ -52,7 +55,7 @@ export default function(curState = initialState, action) {
         return curState;
       }
 
-      const blockClone = cloneDeep(curState.currentBlock);
+      const blockClone = cloneBlock(curState.currentBlock);
       blockClone.x -= 1;
       return { ...curState, currentBlock: blockClone };
     }
@@ -70,12 +73,12 @@ export default function(curState = initialState, action) {
         return curState;
       }
 
-      const blockClone = cloneDeep(curState.currentBlock);
+      const blockClone = cloneBlock(curState.currentBlock);
       blockClone.x += 1;
       return { ...curState, currentBlock: blockClone };
     }
     case types.ROTATE_BLOCK: {
-      const blockClone = cloneDeep(curState.currentBlock);
+      const blockClone = cloneBlock(curState.currentBlock);
       blockClone.matrix = rotate(blockClone.matrix);
       if (!validateRotation(blockClone, curState.board)) {
         return curState;
@@ -97,7 +100,7 @@ export default function(curState = initialState, action) {
         ...curState,
         board: action.lineIndexes.reduce(
           (board, lineIndex) => removeRow(board, lineIndex),
-          cloneDeep(curState.board),
+          cloneMatrix(curState.board),
         ),
         lines,
         level,

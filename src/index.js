@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { cloneDeep } from 'lodash';
 
 import store from './stores';
 import * as game from './stores/game';
@@ -14,6 +13,7 @@ import './index.css';
 import config from './config';
 import keysWatcher from './keysWatcher';
 import { getFullRowIndexes, hasCollision } from './helpers/matrixHelper';
+import { cloneBlock } from './helpers/blocksHelper';
 
 let holdKeyMovementThreshold = 0;
 let startKeyRepeatThreshold = 0;
@@ -115,7 +115,7 @@ function collapseCompletedLines() {
 }
 
 function placeCurrentBlockToBoard() {
-  const blockClone = cloneDeep(getCurrentBlock());
+  const blockClone = cloneBlock(getCurrentBlock());
   blockClone.y -= 1;
   mergeBlockToBoard(blockClone);
 }
