@@ -23,4 +23,4 @@ export default {
     right: ['arrowright', 'keyd', 'mright'],
     start: ['enter', 'mstart'],
   }
-}
+};

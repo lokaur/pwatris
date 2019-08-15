@@ -5,18 +5,22 @@ import keysWatcher from '../../keysWatcher';
 
 import './Button.scss';
 
-const onTouchStart = (actionName) => keysWatcher.add(actionName);
-const onTouchEnd = (actionName) => keysWatcher.remove(actionName);
+const onTouchStart = actionName => keysWatcher.add(actionName);
+const onTouchEnd = actionName => keysWatcher.remove(actionName);
 
-const ControlButton = (props) => (
-  <button className='btn-circle' onTouchStart={ () => onTouchStart(props.actionName) }
-          onTouchEnd={ () => onTouchEnd(props.actionName) }>
-    <FontAwesomeIcon className='btn-icon' icon={ props.icon }/>
-  </button>);
+const ControlButton = props => (
+  <button
+    className='btn-circle'
+    onTouchStart={() => onTouchStart(props.actionName)}
+    onTouchEnd={() => onTouchEnd(props.actionName)}
+  >
+    <FontAwesomeIcon className='btn-icon' icon={props.icon} />
+  </button>
+);
 
 ControlButton.propTypes = {
   icon: PropTypes.string.isRequired,
-  actionName: PropTypes.string.isRequired
+  actionName: PropTypes.string.isRequired,
 };
 
 export default ControlButton;

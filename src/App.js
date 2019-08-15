@@ -12,7 +12,7 @@ import {
   faVolumeMute
 } from '@fortawesome/free-solid-svg-icons';
 
-import GameCanvas from './game/components/GameCanvas'
+import GameCanvas from './game/components/GameCanvas';
 import NextBlock from './game/components/NextBlock';
 import ScoreCounter from './game/components/ScoreCounter';
 import HighScoreCounter from './game/components/HighScoreCounter';
