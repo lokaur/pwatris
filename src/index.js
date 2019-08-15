@@ -94,6 +94,7 @@ function checkBoard() {
     placeCurrentBlockToBoard();
     collapseCompletedLines();
     changeBlocks();
+    keysWatcher.remove(...config.controls.down);
 
     if (checkCollision()) {
       endGame();
