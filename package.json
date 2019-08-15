@@ -30,7 +30,8 @@
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
     "react-responsive-canvas": "^1.0.2",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "serve": "^11.0.1"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
@@ -83,7 +84,6 @@
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "semver": "6.0.0",
-    "serve": "^11.0.1",
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "1.2.3",
     "ts-pnp": "1.1.2",
